@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "E6dNE+BC61lbZPtmFmohST7EhJb/q2X42xevBSGcZ3Y=",
+  "Source": "contractor_web_api",
+  "BasePath": "_content/contractor_web_api",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
