@@ -46,5 +46,10 @@ namespace contractor_web_api.Data
         {
             throw new NotImplementedException();
         }
+
+        public User Login(string UserName, string Password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Image,
   ImageBackground,
@@ -11,30 +11,52 @@ import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAt
 
 import colors from "../config/colors";
 
-function apiRequest() {
+var apiRequest = function () {
   return fetch(
+    //return the promise
     "https://contractorwebapi20220106135413.azurewebsites.net/api/users"
-  )
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson);
-    });
+  ).then(function (response) {
+    return response.json(); //proccess and return this value
+  });
+};
+
+function practiceFunction() {
+  let obj1 = new Object();
+  obj1["email"] = "jamesDay123@gmail.com";
+  let obj2 = new Object();
+  obj2["email"] = "Email2@la.com";
+
+  const objs = new Array(obj1, obj2);
+  return objs;
 }
 
+class User extends Component {
+  maybe = "james";
+  render() {
+    return <Text> USER {this.maybe}</Text>;
+  }
+}
+//export default User;
+
 function ViewImageScreen(props) {
-  let x = apiRequest();
-  console.log(x);
+  apiRequest()
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch((response) => {
+      console.log("bad response: " + response);
+    });
+
   return (
     <View style={styles.container}>
       <View style={styles.closeIcon}></View>
       <View style={styles.deleteIcon}></View>
-
       <Image
         resizeMode="contain"
         style={styles.image}
         source={require("../assets/icon.png")}
       />
-      <Text style={styles.text} source={x}></Text>
+      <Text style={styles.text}></Text>
     </View>
   );
 }

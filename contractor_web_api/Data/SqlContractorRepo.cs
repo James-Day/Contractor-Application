@@ -38,6 +38,16 @@ namespace contractor_web_api.Data
             return _context.Users.FirstOrDefault(p => p.Id == id);
         }
 
+        public User Login(string UserName, string Password)
+        {
+           var result =  _context.Users.FirstOrDefault(p => p.UserName == UserName);
+            if (result == null) { return result; }
+            if (result.Password == Password) {
+                return result;
+            }
+            return null;
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);

@@ -38,6 +38,15 @@ namespace contractor_web_api.Controllers
             }
             return NotFound();
         }
+        [HttpGet("{Username}/{Password}")]
+        public ActionResult<UserReadDto> Login(string UserName, string Password) {
+            var userItem = _repository.Login(UserName, Password);
+            if (userItem != null)
+            {
+                return Ok(_mapper.Map<UserReadDto>(userItem));
+            }
+            return NotFound();
+        }
         //POST request that responds to this uri: api/users
         [HttpPost]
         public ActionResult<UserReadDto> CreateUser(UserCreateDto createdUser)
