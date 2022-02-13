@@ -14,7 +14,7 @@ import colors from "../config/colors";
 var apiRequest = function () {
   return fetch(
     //return the promise
-    "https://contractorwebapi20220106135413.azurewebsites.net/api/users"
+    "https://contractorwebapi20220106135413.azurewebsites.net/api/users" //API not working currently.
   ).then(function (response) {
     return response.json(); //proccess and return this value
   });

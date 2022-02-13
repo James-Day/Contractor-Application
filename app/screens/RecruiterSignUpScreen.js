@@ -70,7 +70,7 @@ var postAccount = function (
   });
 };
 
-const SignUpScreen = ({ navigation }) => {
+const ContractorSignUpScreen = ({ navigation }) => {
   const [userName, setName] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -159,7 +159,7 @@ const SignUpScreen = ({ navigation }) => {
         style={styles.userNameInput}
         placeholder="Last 4 digits of SSN         "
         placeholderTextColor="grey"
-        maxLength={20}
+        maxLength={4}
         onChangeText={(val) => setssnlastfour(val)}
       />
 
@@ -256,7 +256,7 @@ const SignUpScreen = ({ navigation }) => {
       </View>
       <View style={styles.radioButtons}>
         <Text>Contractor</Text>
-        <RadioButton //might change this to have a serperate screen for asking if a contractor or not
+        <RadioButton
           value="first"
           status={checked === "Contractor" ? "checked" : "unchecked"}
           onPress={() => setChecked("Contractor")}
@@ -307,7 +307,7 @@ const SignUpScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
-export default SignUpScreen;
+export default ContractorSignUpScreen;
 
 const styles = StyleSheet.create({
   background: {

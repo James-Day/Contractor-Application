@@ -16,7 +16,7 @@ var apiRequest = function (UserName, Password) {
   //change to async
   return fetch(
     //return the promise
-    `https://contractorwebapi20220106135413.azurewebsites.net/api/users/${UserName}/${Password}`
+    `https://contractorwebapi20220106135413.azurewebsites.net/api/users/${UserName}/${Password}` //API not working currently.
   ).then(function (response) {
     return response.json(); //proccess and return this value
   });
@@ -65,6 +65,7 @@ const WelcomeScreen = ({ navigation }) => {
             let x = apiRequest(userName, password)
               .then(function (response) {
                 //console.log(response);
+                console.log(typeof response);
                 if (response.status == 404) {
                   //if not found
                   Alert.alert(
@@ -95,7 +96,7 @@ const WelcomeScreen = ({ navigation }) => {
         <Button
           title="Sign up"
           onPress={() => {
-            return navigation.navigate("SignUp", {
+            return navigation.navigate("ContractorOrRecruiter", {
               firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
             });
           }}
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "150",
     backgroundColor: "#fc5c65",
+    padding: 10,
   },
   logo: {
     width: 100,
@@ -124,6 +126,15 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 50,
     alignItems: "center",
+  },
+  passwordInput: {
+    height: 40,
+    width: "100%",
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    color: "white",
+    borderColor: "white",
   },
   registerButton: {
     width: "100%",
@@ -136,15 +147,6 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    borderColor: "white",
-  },
-  passwordInput: {
-    height: 40,
-    width: "100%",
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    color: "white",
     borderColor: "white",
   },
 });

@@ -68,6 +68,29 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     backgroundColor: "grey",
   },
+  experience: {
+    flexDirection: "row",
+    top: 40,
+    backgroundColor: "white",
+    width: "100%",
+    height: "20%",
+  },
+  greyText: {
+    color: "grey",
+    fontSize: 18,
+  },
+  linkedIn: {
+    //I might want to combine linked in and email into one view so there is more room to display them
+    fontSize: 15,
+    fontFamily: "lato-black",
+  },
+  nameBar: {
+    flexDirection: "row",
+    top: 30,
+    backgroundColor: "white",
+    width: "100%",
+    height: "20%",
+  },
   nameProfilePic: {
     top: 50,
     left: 20,
@@ -82,43 +105,20 @@ const styles = StyleSheet.create({
     width: "27%",
     height: "75%",
   },
-  nameBar: {
-    flexDirection: "row",
-    top: 30,
-    backgroundColor: "white",
-    width: "100%",
-    height: "20%",
-  },
-  userName: {
-    left: "25%",
-    top: "12%",
-    fontSize: 20,
-    fontFamily: "lato-black",
-  },
-  experience: {
-    flexDirection: "row",
-    top: 40,
-    backgroundColor: "white",
-    width: "100%",
-    height: "20%",
-  },
   stats: {
     alignItems: "center",
     backgroundColor: "green",
     width: "33%",
     height: "100%",
   },
-  greyText: {
-    color: "grey",
-    fontSize: 18,
-  },
   totalExperience: {
     fontSize: 22,
     fontFamily: "lato-black",
   },
-  linkedIn: {
-    //I might want to combine linked in and email into one view so there is more room to display them
-    fontSize: 15,
+  userName: {
+    left: "25%",
+    top: "12%",
+    fontSize: 20,
     fontFamily: "lato-black",
   },
 });
