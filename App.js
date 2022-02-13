@@ -8,6 +8,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //Screens
 import ContractorHomeScreen from "./app/screens/ContractorHomeScreen";
 import SignUpScreen from "./app/screens/SignUpScreen";
+import ContractorOrRecruiter from "./app/screens/ControactorOrRecruiter";
+import RecruiterSignUpScreen from "./app/screens/RecruiterSignUpScreen";
+import RecruiterHomeScreen from "./app/screens/RecruiterHomeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,12 +41,27 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="Contractor"
+          component={RecruiterHomeScreen}
+          options={{ headerShown: false }} //can add a title here if I'd like
+        />
+
+        <Stack.Screen
           name="Home"
           component={WelcomeScreen}
           options={{ headerShown: false }} //can add a title here if I'd like
         />
         <Stack.Screen name="Profile" component={ContractorHomeScreen} />
+        <Stack.Screen
+          name="ContractorOrRecruiter"
+          component={ContractorOrRecruiter}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen
+          name="RecruiterSignUp"
+          component={RecruiterSignUpScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

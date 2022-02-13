@@ -1,18 +1,11 @@
-import { React, Component, useState } from "react";
+import { React } from "react";
 import {
-  Button,
-  Image,
   ImageBackground,
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Alert,
   TouchableOpacity,
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const ContractorOrRecruiter = ({ navigation }) => {
   return (
@@ -20,44 +13,44 @@ const ContractorOrRecruiter = ({ navigation }) => {
       style={styles.background}
       source={require("../assets/background.jpg")}
     >
-      <View style={styles.buttons}>
-        <TouchableOpacity
-          style={{
-            height: "60%",
-            width: "50%",
-            backgroundColor: "lightblue", //change these to look nice
-            padding: 10,
-            margin: 10,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => {
-            return navigation.navigate("SignUp", {
-              firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
-            });
-          }}
-        >
-          <Text style={styles.textFont}>I'm a contractor</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            height: "60%",
-            width: "50%",
-            backgroundColor: "#FF3D00", //change these to look nice
-            padding: 10,
-            margin: 10,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => {
-            return navigation.navigate("SignUp", {
-              firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
-            });
-          }}
-        >
-          <Text style={styles.textFont}>I'm a recruiter</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={{
+          height: "35%",
+          width: "65%",
+          backgroundColor: "lightblue", //change these to look nice
+          padding: 10,
+          margin: 10,
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 50,
+        }}
+        onPress={() => {
+          return navigation.navigate("SignUp", {
+            firstTime: false, //when navigating to the profile screen from the sign up screen, will give a tutorial
+          });
+        }}
+      >
+        <Text style={styles.textFont}>I'm a contractor</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          height: "35%",
+          width: "65%",
+          backgroundColor: "#FF3D00", //change these to look nice
+          padding: 10,
+          margin: 10,
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 50,
+        }}
+        onPress={() => {
+          return navigation.navigate("RecruiterSignUp", {
+            firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
+          });
+        }}
+      >
+        <Text style={styles.textFont}>I'm a recruiter </Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
@@ -69,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttons: {
-    flexDirection: "row",
+    flexDirection: "column",
   },
   btnSize: {
     width: "100%",

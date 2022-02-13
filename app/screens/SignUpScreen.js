@@ -1,7 +1,6 @@
-import { React, Component, useState } from "react";
+import { React, useState } from "react";
 import {
   Button,
-  Image,
   ImageBackground,
   StyleSheet,
   Text,
@@ -9,13 +8,8 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SelectDropdown from "react-native-select-dropdown";
-import { borderRightColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { RadioButton } from "react-native-paper";
 
 var postAccount = function (
   firstName,
@@ -28,8 +22,7 @@ var postAccount = function (
   ssnlastfour,
   highestEducation,
   graduationYear,
-  totalExperience,
-  relocation
+  totalExperience
 ) {
   //change to async
   let newAccount = {
@@ -44,7 +37,6 @@ var postAccount = function (
     highest_education: highestEducation,
     graduationYear: graduationYear,
     totalExperience: totalExperience,
-    relocation: relocation,
   };
   // for (var i = 0; i < 10; i++) {
   // newAccount.password[i] += 1;
@@ -55,7 +47,6 @@ var postAccount = function (
   return fetch(
     //return the promise
     // `https://contractorwebapi20220106135413.azurewebsites.net/api/users/`,
-    //`https://localhost:7266/api/users/`,
     {
       method: "POST",
       headers: {
@@ -84,8 +75,6 @@ const SignUpScreen = ({ navigation }) => {
   const [totalExperience, setTotalExperience] = useState("");
   const [relocation, setRelocation] = useState("");
 
-  const [checked, setChecked] = useState("Contractor");
-
   const Education = [
     "No highschool",
     "Highschool Deploma",
@@ -107,30 +96,30 @@ const SignUpScreen = ({ navigation }) => {
       <Text style={styles.header}>Create account</Text>
       <TextInput
         style={styles.userNameInput}
-        placeholder="First Name                    "
-        placeholderTextColor="grey" //move some of these to the styles?
+        placeholder="First Name"
+        placeholderTextColor="grey"
         maxLength={20}
         onChangeText={(val) => setFirstName(val)}
       />
 
       <TextInput
         style={styles.userNameInput}
-        placeholder="Last Name                    "
-        placeholderTextColor="grey" //move some of these to the styles?
+        placeholder="Last Name"
+        placeholderTextColor="grey"
         maxLength={20}
         onChangeText={(val) => setLastName(val)}
       />
       <TextInput
         style={styles.userNameInput}
-        placeholder="Username                   "
-        placeholderTextColor="grey" //move some of these to the styles?
+        placeholder="Username"
+        placeholderTextColor="grey"
         maxLength={20}
         onChangeText={(val) => setName(val)}
       />
       <TextInput
         style={styles.userNameInput}
-        placeholder="Password                    "
-        placeholderTextColor="grey" //move some of these to the styles?
+        placeholder="Password"
+        placeholderTextColor="grey"
         maxLength={20}
         onChangeText={(val) => setPassword(val)}
       />
@@ -143,7 +132,7 @@ const SignUpScreen = ({ navigation }) => {
       />
       <TextInput
         style={styles.userNameInput}
-        placeholder="Email                        "
+        placeholder="Email"
         placeholderTextColor="grey"
         maxLength={20}
         onChangeText={(val) => setEmail(val)}
@@ -157,19 +146,14 @@ const SignUpScreen = ({ navigation }) => {
       />
       <TextInput
         style={styles.userNameInput}
-        placeholder="Last 4 digits of SSN         "
+        placeholder="Last 4 digits of SSN"
         placeholderTextColor="grey"
-        maxLength={20}
+        maxLength={4}
         onChangeText={(val) => setssnlastfour(val)}
       />
 
       <View
         style={{
-          //borderColor: "black",
-          //borderBottomWidth: 1,
-          // borderLeftWidth: 1,
-          // borderRightWidth: 1,
-          //borderTopWidth: 1,
           flexDirection: "row",
           alignItems: "center",
           width: "95%",
@@ -196,13 +180,9 @@ const SignUpScreen = ({ navigation }) => {
               );
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
-              // text represented after item is selected
-              // if data array is an array of objects then return selectedItem.property to render after item is selected
               return selectedItem;
             }}
             rowTextForSelection={(item, index) => {
-              // text represented for each item in dropdown
-              // if data array is an array of objects then return item.property to represent item in dropdown
               return item;
             }}
           ></SelectDropdown>
@@ -242,30 +222,13 @@ const SignUpScreen = ({ navigation }) => {
               );
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
-              // text represented after item is selected
-              // if data array is an array of objects then return selectedItem.property to render after item is selected
               return selectedItem;
             }}
             rowTextForSelection={(item, index) => {
-              // text represented for each item in dropdown
-              // if data array is an array of objects then return item.property to represent item in dropdown
               return item;
             }}
           ></SelectDropdown>
         </View>
-      </View>
-      <View style={styles.radioButtons}>
-        <Text>Contractor</Text>
-        <RadioButton //might change this to have a serperate screen for asking if a contractor or not
-          value="first"
-          status={checked === "Contractor" ? "checked" : "unchecked"}
-          onPress={() => setChecked("Contractor")}
-        />
-        <RadioButton
-          value="second"
-          status={checked === "Recruiter" ? "checked" : "unchecked"}
-          onPress={() => setChecked("Recruiter")}
-        />
       </View>
 
       <Button
