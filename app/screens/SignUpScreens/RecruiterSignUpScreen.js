@@ -8,8 +8,6 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-import SelectDropdown from "react-native-select-dropdown";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 var postAccount = function (
   firstName,
@@ -186,33 +184,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "black",
     color: "black",
-  },
-  halfScreen: {
-    height: 50,
-    width: "60%",
-    borderWidth: 1,
-    borderColor: "black",
-    color: "black",
-  },
-  halfScreen2: {
-    height: 50,
-    width: "76.5%",
-    borderWidth: 1,
-    borderColor: "black",
-    color: "black",
-  },
-  dropDownView: {
-    flex: 1,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  dropDownText: {
-    fontSize: 13,
-    fontWeight: "bold",
-  },
-  radioButtons: {
-    flexDirection: "row",
-    alignItems: "center",
   },
 });

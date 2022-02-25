@@ -32,14 +32,7 @@ const TextScreen = ({ route, navigation }) => {
       <View style={styles.text}>
         <View style={{ flexDirection: "row", paddingTop: 10 }}>
           <TextInput
-            style={{
-              marginLeft: 10,
-              width: "70%",
-              borderRadius: 10, //move to styles
-              borderColor: "black",
-              borderWidth: 1,
-              paddingLeft: 10,
-            }}
+            style={styles.messageBox}
             placeholder="Send a chat"
             placeholderTextColor="grey"
             maxLength={200}
@@ -51,26 +44,9 @@ const TextScreen = ({ route, navigation }) => {
             onPress={() => {
               Alert.alert("Alert", "This will send the message using my api"); //will render chat in chat textbox (not sure how I'll save it yet)
             }}
-            style={{
-              backgroundColor: "#3498db",
-              height: 40,
-              width: 80,
-              marginRight: 10,
-              borderRadius: 20, //Move to styles
-              marginLeft: 10,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            style={styles.sendButton}
           >
-            <Text
-              style={{
-                color: "white",
-                bottom: 2,
-                //move to styles
-              }}
-            >
-              Send
-            </Text>
+            <Text style={styles.sendButtonText}>Send</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -86,6 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
+  chats: { flex: 0.8, width: "100%", borderColor: "black", borderWidth: 1 },
   titleName: {
     borderColor: "black",
     borderWidth: 1,
@@ -94,7 +71,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  chats: { flex: 0.8, width: "100%", borderColor: "black", borderWidth: 1 },
   text: {
     borderColor: "black",
     borderWidth: 1,
@@ -112,6 +88,28 @@ const styles = StyleSheet.create({
     height: 50,
     marginRight: 10,
     alignSelf: "center",
+  },
+  sendButton: {
+    backgroundColor: "#3498db",
+    height: 40,
+    width: 80,
+    marginRight: 10,
+    borderRadius: 20,
+    marginLeft: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sendButtonText: {
+    color: "white",
+    bottom: 2,
+  },
+  messageBox: {
+    marginLeft: 10,
+    width: "70%",
+    borderRadius: 10,
+    borderColor: "black",
+    borderWidth: 1,
+    paddingLeft: 10,
   },
 });
 export default TextScreen;

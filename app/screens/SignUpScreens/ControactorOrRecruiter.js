@@ -17,7 +17,7 @@ const ContractorOrRecruiter = ({ navigation }) => {
         style={[styles.button, { backgroundColor: "lightblue" }]}
         onPress={() => {
           return navigation.navigate("SignUp", {
-            firstTime: false, //when navigating to the profile screen from the sign up screen, will give a tutorial
+            firstTime: false,
           });
         }}
       >
@@ -27,7 +27,7 @@ const ContractorOrRecruiter = ({ navigation }) => {
         style={[styles.button, { backgroundColor: "#FFD00" }]}
         onPress={() => {
           return navigation.navigate("RecruiterSignUp", {
-            firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
+            firstTime: false,
           });
         }}
       >
@@ -43,16 +43,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  buttons: {
-    flexDirection: "column",
-  },
   btnSize: {
     width: "100%",
-  },
-  textFont: {
-    fontWeight: "bold",
-    fontSize: 30,
-    color: "white",
   },
   button: {
     height: "35%",
@@ -62,6 +54,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 50,
+  },
+  textFont: {
+    fontWeight: "bold",
+    fontSize: 30,
+    color: "white",
   },
 });
 export default ContractorOrRecruiter;

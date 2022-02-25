@@ -96,9 +96,23 @@ const RecruiterCommunicationScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  chatButton: {
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
   gridView: {
     marginTop: 10,
     flex: 1,
+  },
+  image: {
+    height: 30,
+    width: 30,
+    alignSelf: "center",
+  },
+  itemCode: {
+    fontWeight: "600",
+    fontSize: 12,
+    color: "#fff",
   },
   itemContainer: {
     justifyContent: "space-between",
@@ -112,20 +126,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "600",
   },
-  itemCode: {
-    fontWeight: "600",
-    fontSize: 12,
-    color: "#fff",
-  },
-  image: {
-    height: 30,
-    width: 30,
+  profilePicture: {
+    height: 40,
+    width: 40,
     alignSelf: "center",
-  },
-  textBox: {
-    fontWeight: "600",
-    fontSize: 20,
-    color: "#fff",
   },
   rightToRepresentButton: {
     position: "absolute",
@@ -139,14 +143,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     elevation: 10,
   },
-  chatButton: {
-    flexDirection: "column",
-    justifyContent: "flex-end",
-  },
-  profilePicture: {
-    height: 40,
-    width: 40,
-    alignSelf: "center",
+  textBox: {
+    fontWeight: "600",
+    fontSize: 20,
+    color: "#fff",
   },
 });
 export default RecruiterCommunicationScreen;

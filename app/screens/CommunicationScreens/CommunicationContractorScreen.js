@@ -67,9 +67,18 @@ const ContractorCommunicationScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  chatButton: {
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
   gridView: {
     marginTop: 10,
     flex: 1,
+  },
+  itemCode: {
+    fontWeight: "600",
+    fontSize: 12,
+    color: "#fff",
   },
   itemContainer: {
     justifyContent: "flex-end",
@@ -81,15 +90,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#fff",
     fontWeight: "600",
-  },
-  itemCode: {
-    fontWeight: "600",
-    fontSize: 12,
-    color: "#fff",
-  },
-  chatButton: {
-    flexDirection: "column",
-    justifyContent: "flex-end",
   },
   profilePicture: {
     height: 40,
