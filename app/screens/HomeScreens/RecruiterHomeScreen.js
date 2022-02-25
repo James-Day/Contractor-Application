@@ -1,50 +1,69 @@
-import { Text, View, StyleSheet, StatusBar, Platform } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  Platform,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 
 const getFonts = () =>
   Font.loadAsync({
-    "lato-black": require("../assets/fonts/Lato-Black.ttf"),
-    "nunito-bold": require("../assets/fonts/Nunito-Bold.ttf"),
+    //"lato-black": require("./assets/fonts/FredokaOne-Regular.ttf"),
+    // "nunito-bold": require("./assets/fonts/Nunito-Bold.ttf"),
   });
 
-function ContractorHomeScreen({ route, navigation }) {
-  const { response, firstTime } = route.params;
-  // {JSON.stringify(response)} for displaying entire response //will have to decrypt elements in response
+function RecruiterHomeScreen({ route, navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  //const { response, firstTime } = route.params;     //no response for now since api is offline
+  // {JSON.stringify(response)} for displaying entire response //will have to decrypt elements in response
 
   if (fontsLoaded) {
     return (
       <View style={styles.background}>
         <View style={styles.nameBar}>
           <View style={styles.profilePic}>
-            <Text>pic</Text>
+            <Text style={{ color: "white" }}>profile pic</Text>
           </View>
-          <Text style={styles.userName}>
-            {response.firstName} {response.lastName}
-          </Text>
+          <Text style={styles.userName}>Name with email below it?</Text>
         </View>
         <View style={styles.experience}>
           <View style={styles.stats}>
-            <Text style={styles.greyText}>experience</Text>
-            <Text style={styles.totalExperience}>
-              {response.totalExperience}
-            </Text>
+            <Text style={styles.greyText}>Current Posts</Text>
+            <Text style={styles.totalExperience}></Text>
           </View>
           <Text>|</Text>
           <View style={styles.stats}>
             <Text style={styles.greyText}>Email</Text>
-            <Text style={styles.linkedIn}>{response.email}</Text>
           </View>
           <Text>|</Text>
           <View style={styles.stats}>
             <Text style={styles.greyText}>LinkedIn</Text>
-            <Text style={styles.linkedIn}>{response.linkedin}</Text>
           </View>
         </View>
-
-        <Text style={styles.nameProfilePic}>{response.firstName}</Text>
+        <TouchableOpacity
+          style={{
+            backgroundColor: "black",
+            height: 100,
+            width: 100,
+            top: 25,
+            alignSelf: "center",
+          }}
+          title="Temporary button to send to 'chat' screen"
+          onPress={() => {
+            return navigation.navigate("RecruiterCommunication", {
+              firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
+            });
+          }}
+        >
+          <Text style={{ color: "white" }}>
+            Place holder button for testing out communication page
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   } else {
@@ -60,7 +79,7 @@ function ContractorHomeScreen({ route, navigation }) {
     );
   }
 }
-export default ContractorHomeScreen;
+export default RecruiterHomeScreen;
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -71,7 +90,7 @@ const styles = StyleSheet.create({
   },
   experience: {
     flexDirection: "row",
-    top: 40,
+    top: 10,
     backgroundColor: "white",
     width: "100%",
     height: "20%",
@@ -81,13 +100,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   linkedIn: {
-    //I might want to combine linked in and email into one view so there is more room to display them
     fontSize: 15,
     fontFamily: "lato-black",
   },
   nameBar: {
     flexDirection: "row",
-    top: 30,
     backgroundColor: "white",
     width: "100%",
     height: "20%",

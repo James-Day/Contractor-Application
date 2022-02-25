@@ -1,4 +1,12 @@
-import { Text, View, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  Platform,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -11,6 +19,8 @@ const getFonts = () =>
 
 function RecruiterHomeScreen({ route, navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  //const { response, firstTime } = route.params;     //no response for now since api is offline
+  // {JSON.stringify(response)} for displaying entire response //will have to decrypt elements in response
 
   if (fontsLoaded) {
     return (
@@ -35,6 +45,25 @@ function RecruiterHomeScreen({ route, navigation }) {
             <Text style={styles.greyText}>LinkedIn</Text>
           </View>
         </View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: "black",
+            height: 100,
+            width: 100,
+            top: 25,
+            alignSelf: "center",
+          }}
+          title="Temporary button to send to 'chat' screen"
+          onPress={() => {
+            return navigation.navigate("RecruiterCommunication", {
+              firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
+            });
+          }}
+        >
+          <Text style={{ color: "white" }}>
+            Place holder button for testing out communication page
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   } else {
@@ -57,10 +86,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     backgroundColor: "grey",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   experience: {
     flexDirection: "row",
-    top: 40,
+    top: 10,
     backgroundColor: "white",
     width: "100%",
     height: "20%",
@@ -75,7 +105,6 @@ const styles = StyleSheet.create({
   },
   nameBar: {
     flexDirection: "row",
-    top: 30,
     backgroundColor: "white",
     width: "100%",
     height: "20%",

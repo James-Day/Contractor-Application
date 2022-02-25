@@ -7,8 +7,6 @@ import {
   View,
   TextInput,
   Alert,
-  Platform,
-  StatusBar,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -20,10 +18,7 @@ var postAccount = function (
   password,
   phoneNumber,
   email,
-  linkedin,
-  ssnlastfour,
   highestEducation,
-  graduationYear,
   totalExperience
 ) {
   //change to async
@@ -34,17 +29,11 @@ var postAccount = function (
     lastName: lastName,
     phoneNumber: phoneNumber,
     email: email,
-    linkedin: linkedin,
-    ssnLastFour: ssnlastfour,
     highest_education: highestEducation,
-    graduationYear: graduationYear,
     totalExperience: totalExperience,
   };
-  // for (var i = 0; i < 10; i++) {
-  // newAccount.password[i] += 1;
-  // }
-  //console.log(newAccount);
-  //console.log(typeof newAccount);
+
+  //Perform some sort of encryption right here
 
   return fetch(
     //return the promise
@@ -63,19 +52,13 @@ var postAccount = function (
   });
 };
 
-const SignUpScreen = ({ navigation }) => {
+const RecruiterSignUpScreen = ({ navigation }) => {
   const [userName, setName] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [ssnlastfour, setssnlastfour] = useState("");
-  const [highestEducation, setHighestEducation] = useState("");
-  const [graduationYear, setGraduationYear] = useState("");
-  const [totalExperience, setTotalExperience] = useState("");
-  const [relocation, setRelocation] = useState("");
 
   const Education = [
     "No highschool",
@@ -125,13 +108,7 @@ const SignUpScreen = ({ navigation }) => {
         maxLength={20}
         onChangeText={(val) => setPassword(val)}
       />
-      <View //This was a text input but I think I'll have the user give their linked in and phonenumber on their profile screen if they'd like
-      //style={styles.userNameInput}
-      //placeholder="Phone Number (optional)      "
-      //placeholderTextColor="grey"
-      //maxLength={20}
-      //onChangeText={(val) => setPhoneNumber(val)}
-      />
+
       <TextInput
         style={styles.userNameInput}
         placeholder="Email"
@@ -139,116 +116,30 @@ const SignUpScreen = ({ navigation }) => {
         maxLength={20}
         onChangeText={(val) => setEmail(val)}
       />
-      <View //This was a text input but I think I'll have the user give their linked in and phonenumber on their profile screen if they'd like
-      //style={styles.userNameInput}
-      //placeholder="LinkedIn                    "
-      //placeholderTextColor="grey"
-      //maxLength={20}
-      //onChangeText={(val) => setLinkedin(val)}
+      <TextInput
+        style={styles.userNameInput}
+        placeholder="Phone Number"
+        placeholderTextColor="grey"
+        maxLength={20}
+        onChangeText={(val) => setPhoneNumber(val)}
       />
       <TextInput
         style={styles.userNameInput}
-        placeholder="Last 4 digits of SSN"
-        placeholderTextColor="grey"
-        maxLength={4}
-        onChangeText={(val) => setssnlastfour(val)}
+        placeholder="Company"
+        maxLength={20}
+        onChangeText={(val) => setPhoneNumber(val)}
       />
-
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          width: "95%",
-        }}
-      >
-        <Text>Education</Text>
-        <View style={styles.dropDownView}>
-          <SelectDropdown //Highest education
-            data={Education}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
-            }}
-            defaultButtonText={"Select Education"}
-            buttonStyle={styles.halfScreen}
-            buttonTextStyle={styles.dropDownText} //Move all of this to styles
-            dropdownIconPosition={"right"}
-            renderDropdownIcon={(isOpened) => {
-              return (
-                <FontAwesome
-                  name={isOpened ? "chevron-up" : "chevron-down"}
-                  color={"#444"}
-                  size={18}
-                />
-              );
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
-          ></SelectDropdown>
-        </View>
-      </View>
-
-      <View
-        style={{
-          //borderColor: "black",
-          //borderBottomWidth: 1,
-          // borderLeftWidth: 1,
-          // borderRightWidth: 1,
-          //borderTopWidth: 1,
-          flexDirection: "row",
-          alignItems: "center",
-          width: "95%",
-        }}
-      >
-        <Text>Years of Experience</Text>
-        <View style={styles.dropDownView}>
-          <SelectDropdown //Highest education
-            data={Experience}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
-            }}
-            defaultButtonText={"Select Experience"}
-            buttonStyle={styles.halfScreen2}
-            buttonTextStyle={styles.dropDownText} //Move all of this to styles
-            dropdownIconPosition={"right"}
-            renderDropdownIcon={(isOpened) => {
-              return (
-                <FontAwesome
-                  name={isOpened ? "chevron-up" : "chevron-down"}
-                  color={"#444"}
-                  size={18}
-                />
-              );
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
-          ></SelectDropdown>
-        </View>
-      </View>
 
       <Button
         title="Sign up"
         onPress={() => {
-          let x = postAccount(
+          postAccount(
             firstName,
             lastName,
             userName,
             password,
             phoneNumber,
-            email,
-            linkedin,
-            ssnlastfour,
-            highestEducation,
-            graduationYear,
-            totalExperience,
-            relocation
+            email
           )
             .then(function (response) {
               if (response.status == 400) {
@@ -258,6 +149,9 @@ const SignUpScreen = ({ navigation }) => {
                 );
               } else {
                 Alert.alert("success account was created");
+                return navigation.navigate("Profile", {
+                  firstTime: false,
+                });
                 //Navigate to recruiter / contractor homescreen
               }
             })
@@ -272,14 +166,13 @@ const SignUpScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
-export default SignUpScreen;
+export default RecruiterSignUpScreen;
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header: {
     fontSize: 25,
@@ -297,18 +190,14 @@ const styles = StyleSheet.create({
   halfScreen: {
     height: 50,
     width: "60%",
-    // margin: 2,
     borderWidth: 1,
-    //padding: 10,
     borderColor: "black",
     color: "black",
   },
   halfScreen2: {
     height: 50,
     width: "76.5%",
-    // margin: 2,
     borderWidth: 1,
-    //padding: 10,
     borderColor: "black",
     color: "black",
   },

@@ -5,8 +5,8 @@ import AppLoading from "expo-app-loading";
 
 const getFonts = () =>
   Font.loadAsync({
-    "lato-black": require("../assets/fonts/Lato-Black.ttf"),
-    "nunito-bold": require("../assets/fonts/Nunito-Bold.ttf"),
+    //"lato-black": require("./assets/fonts/Lato-Black.tff"),
+    // "nunito-bold": require("./assets/fonts/Nunito-Bold.ttf"),
   });
 
 function ContractorHomeScreen({ route, navigation }) {

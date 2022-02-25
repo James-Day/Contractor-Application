@@ -68,14 +68,8 @@ const SignUpScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [linkedin, setLinkedin] = useState("");
   const [ssnlastfour, setssnlastfour] = useState("");
-  const [highestEducation, setHighestEducation] = useState("");
-  const [graduationYear, setGraduationYear] = useState("");
-  const [totalExperience, setTotalExperience] = useState("");
-  const [relocation, setRelocation] = useState("");
 
   const Education = [
     "No highschool",
@@ -125,13 +119,7 @@ const SignUpScreen = ({ navigation }) => {
         maxLength={20}
         onChangeText={(val) => setPassword(val)}
       />
-      <View //This was a text input but I think I'll have the user give their linked in and phonenumber on their profile screen if they'd like
-      //style={styles.userNameInput}
-      //placeholder="Phone Number (optional)      "
-      //placeholderTextColor="grey"
-      //maxLength={20}
-      //onChangeText={(val) => setPhoneNumber(val)}
-      />
+
       <TextInput
         style={styles.userNameInput}
         placeholder="Email"
@@ -139,13 +127,7 @@ const SignUpScreen = ({ navigation }) => {
         maxLength={20}
         onChangeText={(val) => setEmail(val)}
       />
-      <View //This was a text input but I think I'll have the user give their linked in and phonenumber on their profile screen if they'd like
-      //style={styles.userNameInput}
-      //placeholder="LinkedIn                    "
-      //placeholderTextColor="grey"
-      //maxLength={20}
-      //onChangeText={(val) => setLinkedin(val)}
-      />
+
       <TextInput
         style={styles.userNameInput}
         placeholder="Last 4 digits of SSN"
@@ -154,13 +136,7 @@ const SignUpScreen = ({ navigation }) => {
         onChangeText={(val) => setssnlastfour(val)}
       />
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          width: "95%",
-        }}
-      >
+      <View style={styles.dropdownView}>
         <Text>Education</Text>
         <View style={styles.dropDownView}>
           <SelectDropdown //Highest education
@@ -170,7 +146,7 @@ const SignUpScreen = ({ navigation }) => {
             }}
             defaultButtonText={"Select Education"}
             buttonStyle={styles.halfScreen}
-            buttonTextStyle={styles.dropDownText} //Move all of this to styles
+            buttonTextStyle={styles.dropDownText}
             dropdownIconPosition={"right"}
             renderDropdownIcon={(isOpened) => {
               return (
@@ -191,18 +167,7 @@ const SignUpScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <View
-        style={{
-          //borderColor: "black",
-          //borderBottomWidth: 1,
-          // borderLeftWidth: 1,
-          // borderRightWidth: 1,
-          //borderTopWidth: 1,
-          flexDirection: "row",
-          alignItems: "center",
-          width: "95%",
-        }}
-      >
+      <View style={styles.dropDownText}>
         <Text>Years of Experience</Text>
         <View style={styles.dropDownView}>
           <SelectDropdown //Highest education
@@ -212,7 +177,7 @@ const SignUpScreen = ({ navigation }) => {
             }}
             defaultButtonText={"Select Experience"}
             buttonStyle={styles.halfScreen2}
-            buttonTextStyle={styles.dropDownText} //Move all of this to styles
+            buttonTextStyle={styles.dropDownText}
             dropdownIconPosition={"right"}
             renderDropdownIcon={(isOpened) => {
               return (
@@ -236,7 +201,7 @@ const SignUpScreen = ({ navigation }) => {
       <Button
         title="Sign up"
         onPress={() => {
-          let x = postAccount(
+          postAccount(
             firstName,
             lastName,
             userName,
@@ -297,18 +262,14 @@ const styles = StyleSheet.create({
   halfScreen: {
     height: 50,
     width: "60%",
-    // margin: 2,
     borderWidth: 1,
-    //padding: 10,
     borderColor: "black",
     color: "black",
   },
   halfScreen2: {
     height: 50,
     width: "76.5%",
-    // margin: 2,
     borderWidth: 1,
-    //padding: 10,
     borderColor: "black",
     color: "black",
   },
@@ -325,5 +286,10 @@ const styles = StyleSheet.create({
   radioButtons: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  dropdownView: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "95%",
   },
 });
