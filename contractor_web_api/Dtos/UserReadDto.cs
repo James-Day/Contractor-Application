@@ -2,10 +2,7 @@
 {
     public class UserReadDto
     {
-
-        public int Id { get; set; }     
-        public string FirstName { get; set; }
-
+        public int Id { get; set; }
         public string LastName { get; set; }
      
         public string PhoneNumber { get; set; }
@@ -16,12 +13,12 @@
 
         public int? SSNLastFour { get; set; }
 
-        public string highest_education { get; set; }
-       
-        public int? GraduationYear { get; set; }
-    
-        public string TotalExperience { get; set; }
+        public string? highest_education { get; set; }
+        
+        public string? TotalExperience { get; set; }
 
-        public bool? Relocation { get; set; }
+        public bool isContractor { get; set; }
+
+        public string? Company { get; set; }
     }
 }
