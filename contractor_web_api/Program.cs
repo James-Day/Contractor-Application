@@ -2,14 +2,21 @@
 using contractor_web_api.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+//builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 // Add services to the container.
 ConfigurationManager Configuration = builder.Configuration;
 
 builder.Services.AddDbContext<UserContext>(opt => opt.UseSqlServer
     (Configuration.GetConnectionString("UserConnection")));
+builder.Services.AddDbContext<CommunicationContext>(opt => opt.UseSqlServer
+    (Configuration.GetConnectionString("UserConnection")));
+
 builder.Services.AddControllers().AddNewtonsoftJson(s => {
     s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 });

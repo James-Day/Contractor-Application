@@ -12,6 +12,9 @@ namespace contractor_web_api.Profiles
             CreateMap<UserCreateDto, User>();
             CreateMap<UserUpdateDto, User>();
             CreateMap<User, UserUpdateDto>();
+            CreateMap<Communication, CommunicationReadDto>();
+            CreateMap<CommunicationCreateDto, Communication>();
+
         }
     }
 }

@@ -58,8 +58,6 @@ namespace contractor_web_api.Controllers
             var userReadDto = _mapper.Map<UserReadDto>(userModel);
 
             return CreatedAtRoute(nameof(GetUserById), new { Id = userReadDto.Id }, userReadDto);
-
-            //return Ok(userReadDto);
         }
 
         //Put api/users/{id}
@@ -112,6 +110,38 @@ namespace contractor_web_api.Controllers
             _repository.DeleteUser(userFromRepo);
             _repository.SaveChanges();
             return NoContent();
+        }
+
+        //POST request that responds to this uri: api/users/comm
+        [HttpPost("comm")]
+        public ActionResult<Communication> CreateCommunication(CommunicationCreateDto createdCommunication)
+        {
+            createdCommunication.time = DateTime.Today; //sets the time of each communication
+
+            var CommunicationModel = _mapper.Map<Communication>(createdCommunication);
+            _repository.AddCommunication(CommunicationModel);
+            _repository.SaveChanges();
+
+            var CommunicationReadDto = _mapper.Map<CommunicationReadDto>(CommunicationModel);
+
+            return CreatedAtRoute(nameof(GetCommunicationById), new { Id = CommunicationReadDto.Id }, CommunicationReadDto);
+        }
+        //Get request that responds to this uri: api/users/comm
+        [HttpGet("comm")]
+        public ActionResult<IEnumerable<Communication>> GetAllCommunications()
+        {
+            var userItems = _repository.RetrieveCommunications();
+            return Ok(_mapper.Map<IEnumerable<CommunicationReadDto>>(userItems));
+        }
+        [HttpGet("comm/{id}", Name = "GetCommunicationById")]
+        public ActionResult<UserReadDto> GetCommunicationById(int id) //this id comes from the uri request
+        {
+            var CommunicationItem = _repository.GetCommunicationById(id);
+            if (CommunicationItem != null)
+            {
+                return Ok(_mapper.Map<CommunicationReadDto>(CommunicationItem));
+            }
+            return NotFound();
         }
     }
 }

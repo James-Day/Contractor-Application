@@ -5,10 +5,12 @@ namespace contractor_web_api.Data
     public class SqlContractorRepo : IContractorRepo
     {
         private readonly UserContext _context;
+        private readonly CommunicationContext _Com_context;
 
-        public SqlContractorRepo(UserContext context)
+        public SqlContractorRepo(UserContext context, CommunicationContext com_context)
         {
             _context = context;
+            _Com_context = com_context;
         }
 
         public void CreateNewUser(User usr)
@@ -48,14 +50,32 @@ namespace contractor_web_api.Data
             return null;
         }
 
+        public void AddCommunication(Communication comm) {
+            if (comm == null)
+            {
+                throw new ArgumentNullException(nameof(comm));
+            }
+            _Com_context.Communications.Add(comm);
+        }
+       
         public bool SaveChanges()
         {
-            return (_context.SaveChanges() >= 0);
+            return (_context.SaveChanges() >= 0 && _Com_context.SaveChanges() >=0);
         }
 
         public void UpdateUser(User usr)
         {
             //nothing 
+        }
+
+        public IEnumerable<Communication> RetrieveCommunications()
+        {
+            return _Com_context.Communications.ToList();
+        }
+
+        public Communication GetCommunicationById(int id)
+        {
+            return _Com_context.Communications.FirstOrDefault(p => p.Id == id);
         }
     }
 }
