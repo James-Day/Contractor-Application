@@ -13,18 +13,23 @@ import {
 import SelectDropdown from "react-native-select-dropdown";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
+function setCharAt(str, index) {
+  if (index > str.length - 1) return str;
+  return (
+    str.substring(0, index) +
+    String.fromCharCode(str.charCodeAt(index) + 1) +
+    str.substring(index + 1)
+  );
+}
+
 var postAccount = function (
   firstName,
   lastName,
   userName,
   password,
-  phoneNumber,
   email,
-  linkedin,
-  ssnlastfour,
   highestEducation,
-  graduationYear,
-  totalExperience
+  yearsOfExperience
 ) {
   //change to async
   let newAccount = {
@@ -32,28 +37,24 @@ var postAccount = function (
     password: password,
     firstName: firstName,
     lastName: lastName,
-    phoneNumber: phoneNumber,
     email: email,
-    linkedin: linkedin,
-    ssnLastFour: ssnlastfour,
-    highest_education: highestEducation,
-    graduationYear: graduationYear,
-    totalExperience: totalExperience,
+    highestEducation: highestEducation,
+    yearsOfExperience: yearsOfExperience,
+    isContractor: true,
   };
-  // for (var i = 0; i < 10; i++) {
-  // newAccount.password[i] += 1;
-  // }
-  //console.log(newAccount);
-  //console.log(typeof newAccount);
+  for (var i = 0; i < newAccount.password.length; i++) {
+    newAccount.password = setCharAt(newAccount.password, i); //very simple encryption will need to research later
+    console.log("working");
+  }
 
   return fetch(
     //return the promise
-    // `https://contractorwebapi20220106135413.azurewebsites.net/api/users/`,
+    `https://contractorwebapi.azurewebsites.net/api/users/`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Content-Length": 288, //this will have to change to be variable based on the inputs
+        "Content-Length": JSON.stringify(newAccount).length, 
       },
       body: JSON.stringify(newAccount),
     }
@@ -66,25 +67,28 @@ var postAccount = function (
 const SignUpScreen = ({ navigation }) => {
   const [userName, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [ssnlastfour, setssnlastfour] = useState("");
+  const [highestEducation, sethighestEducation] = useState("");
+  const [yearsOfExperience, setYearsOfExperience] = useState("");
 
-  const Education = [
+  const EducationChoices = [
     "No highschool",
     "Highschool Deploma",
     "Associates",
     "Bachelor's",
     "Masters",
     "Doctorate",
+    "Prefer not to Answer",
   ];
-  const Experience = [
+  const ExperienceChoices = [
     "< 1 year",
     "1-3 years",
     "4-7 years",
     "7-10 years",
     "> 10 years",
+    "Prefer not to Answer",
   ];
 
   return (
@@ -107,6 +111,13 @@ const SignUpScreen = ({ navigation }) => {
       />
       <TextInput
         style={styles.userNameInput}
+        placeholder="Email"
+        placeholderTextColor="grey"
+        maxLength={50}
+        onChangeText={(val) => setEmail(val)}
+      />
+      <TextInput
+        style={styles.userNameInput}
         placeholder="Username"
         placeholderTextColor="grey"
         maxLength={20}
@@ -120,32 +131,16 @@ const SignUpScreen = ({ navigation }) => {
         onChangeText={(val) => setPassword(val)}
       />
 
-      <TextInput
-        style={styles.userNameInput}
-        placeholder="Email"
-        placeholderTextColor="grey"
-        maxLength={20}
-        onChangeText={(val) => setEmail(val)}
-      />
-
-      <TextInput
-        style={styles.userNameInput}
-        placeholder="Last 4 digits of SSN"
-        placeholderTextColor="grey"
-        maxLength={4}
-        onChangeText={(val) => setssnlastfour(val)}
-      />
-
-      <View style={styles.dropdownView}>
+      <View style={styles.dropDownView}>
         <Text>Education</Text>
-        <View style={styles.dropDownView}>
-          <SelectDropdown //Highest education
-            data={Education}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
+        <View style={styles.dropDownBox}>
+          <SelectDropdown //Highest Education
+            data={EducationChoices}
+            onSelect={(selectedItem) => {
+              sethighestEducation(selectedItem);
             }}
             defaultButtonText={"Select Education"}
-            buttonStyle={styles.halfScreen}
+            buttonStyle={styles.EducationHalfScreen}
             buttonTextStyle={styles.dropDownText}
             dropdownIconPosition={"right"}
             renderDropdownIcon={(isOpened) => {
@@ -153,7 +148,7 @@ const SignUpScreen = ({ navigation }) => {
                 <FontAwesome
                   name={isOpened ? "chevron-up" : "chevron-down"}
                   color={"#444"}
-                  size={18}
+                  size={25}
                 />
               );
             }}
@@ -167,16 +162,16 @@ const SignUpScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={styles.dropDownText}>
+      <View style={styles.dropDownView}>
         <Text>Years of Experience</Text>
-        <View style={styles.dropDownView}>
-          <SelectDropdown //Highest education
-            data={Experience}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
+        <View style={styles.dropDownBox}>
+          <SelectDropdown //Highest Education
+            data={ExperienceChoices}
+            onSelect={(selectedItem) => {
+              setYearsOfExperience(selectedItem);
             }}
             defaultButtonText={"Select Experience"}
-            buttonStyle={styles.halfScreen2}
+            buttonStyle={styles.ExperienceHalfScreen}
             buttonTextStyle={styles.dropDownText}
             dropdownIconPosition={"right"}
             renderDropdownIcon={(isOpened) => {
@@ -184,7 +179,7 @@ const SignUpScreen = ({ navigation }) => {
                 <FontAwesome
                   name={isOpened ? "chevron-up" : "chevron-down"}
                   color={"#444"}
-                  size={18}
+                  size={25}
                 />
               );
             }}
@@ -197,7 +192,6 @@ const SignUpScreen = ({ navigation }) => {
           ></SelectDropdown>
         </View>
       </View>
-
       <Button
         title="Sign up"
         onPress={() => {
@@ -206,14 +200,9 @@ const SignUpScreen = ({ navigation }) => {
             lastName,
             userName,
             password,
-            phoneNumber,
             email,
-            linkedin,
-            ssnlastfour,
             highestEducation,
-            graduationYear,
-            totalExperience,
-            relocation
+            yearsOfExperience
           )
             .then(function (response) {
               if (response.status == 400) {
@@ -246,9 +235,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
+  dropDownText: {
+    fontSize: 13,
+    fontWeight: "bold",
+  },
+  dropDownBox: {
+    flex: 1,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  dropDownView: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "95%",
+  },
+  EducationHalfScreen: {
+    height: 50,
+    width: "60%",
+    borderWidth: 1,
+    borderColor: "black",
+    color: "black",
+  },
+  ExperienceHalfScreen: {
+    height: 50,
+    width: "76.5%",
+    borderWidth: 1,
+    borderColor: "black",
+    color: "black",
+  },
   header: {
     fontSize: 25,
     fontWeight: "bold",
+  },
+  radioButtons: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   userNameInput: {
     height: 40,
@@ -258,38 +280,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "black",
     color: "black",
-  },
-  halfScreen: {
-    height: 50,
-    width: "60%",
-    borderWidth: 1,
-    borderColor: "black",
-    color: "black",
-  },
-  halfScreen2: {
-    height: 50,
-    width: "76.5%",
-    borderWidth: 1,
-    borderColor: "black",
-    color: "black",
-  },
-  dropDownView: {
-    flex: 1,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  dropDownText: {
-    fontSize: 13,
-    fontWeight: "bold",
-  },
-  radioButtons: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  dropdownView: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "95%",
   },
 });

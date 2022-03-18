@@ -35,7 +35,7 @@ const TextScreen = ({ route, navigation }) => {
             style={styles.messageBox}
             placeholder="Send a chat"
             placeholderTextColor="grey"
-            maxLength={200}
+            maxLength={500}
             onChangeText={(val) => setChat(val)}
           />
 
@@ -63,19 +63,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   chats: { flex: 0.8, width: "100%", borderColor: "black", borderWidth: 1 },
-  titleName: {
+  messageBox: {
+    marginLeft: 10,
+    width: "70%",
+    borderRadius: 10,
     borderColor: "black",
     borderWidth: 1,
-    width: "100%",
-    flex: 0.1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  text: {
-    borderColor: "black",
-    borderWidth: 1,
-    width: "100%",
-    flex: 0.1,
+    paddingLeft: 10,
   },
   name: {
     fontSize: 25,
@@ -103,13 +97,19 @@ const styles = StyleSheet.create({
     color: "white",
     bottom: 2,
   },
-  messageBox: {
-    marginLeft: 10,
-    width: "70%",
-    borderRadius: 10,
+  text: {
     borderColor: "black",
     borderWidth: 1,
-    paddingLeft: 10,
+    width: "100%",
+    flex: 0.1,
+  },
+  titleName: {
+    borderColor: "black",
+    borderWidth: 1,
+    width: "100%",
+    flex: 0.1,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 export default TextScreen;

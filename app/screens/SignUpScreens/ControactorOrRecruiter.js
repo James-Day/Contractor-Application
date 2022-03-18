@@ -24,7 +24,7 @@ const ContractorOrRecruiter = ({ navigation }) => {
         <Text style={styles.textFont}>I'm a contractor</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: "#FFD00" }]}
+        style={[styles.button, { backgroundColor: "#ff6136" }]}
         onPress={() => {
           return navigation.navigate("RecruiterSignUp", {
             firstTime: false,

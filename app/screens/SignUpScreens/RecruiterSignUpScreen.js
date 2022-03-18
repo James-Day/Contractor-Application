@@ -9,6 +9,15 @@ import {
   Alert,
 } from "react-native";
 
+function setCharAt(str, index) {
+  if (index > str.length - 1) return str;
+  return (
+    str.substring(0, index) +
+    String.fromCharCode(str.charCodeAt(index) + 1) +
+    str.substring(index + 1)
+  );
+}
+
 var postAccount = function (
   firstName,
   lastName,
@@ -16,8 +25,7 @@ var postAccount = function (
   password,
   phoneNumber,
   email,
-  highestEducation,
-  totalExperience
+  company
 ) {
   //change to async
   let newAccount = {
@@ -27,20 +35,22 @@ var postAccount = function (
     lastName: lastName,
     phoneNumber: phoneNumber,
     email: email,
-    highest_education: highestEducation,
-    totalExperience: totalExperience,
+    company,
+    isContractor: false,
   };
 
-  //Perform some sort of encryption right here
-
+  for (var i = 0; i < newAccount.password.length; i++) {
+    newAccount.password = setCharAt(newAccount.password, i); //very simple encryption will need to research later
+    console.log("working");
+  }
   return fetch(
     //return the promise
-    // `https://contractorwebapi20220106135413.azurewebsites.net/api/users/`,
+    `https://contractorwebapi.azurewebsites.net/api/users/`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Content-Length": 288, //this will have to change to be variable based on the inputs
+        "Content-Length": JSON.stringify(newAccount).length,
       },
       body: JSON.stringify(newAccount),
     }
@@ -57,22 +67,7 @@ const RecruiterSignUpScreen = ({ navigation }) => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-
-  const Education = [
-    "No highschool",
-    "Highschool Deploma",
-    "Associates",
-    "Bachelor's",
-    "Masters",
-    "Doctorate",
-  ];
-  const Experience = [
-    "< 1 year",
-    "1-3 years",
-    "4-7 years",
-    "7-10 years",
-    "> 10 years",
-  ];
+  const [company, setCompany] = useState("");
 
   return (
     <ImageBackground style={styles.background}>
@@ -81,7 +76,7 @@ const RecruiterSignUpScreen = ({ navigation }) => {
         style={styles.userNameInput}
         placeholder="First Name"
         placeholderTextColor="grey"
-        maxLength={20}
+        maxLength={50}
         onChangeText={(val) => setFirstName(val)}
       />
 
@@ -89,21 +84,21 @@ const RecruiterSignUpScreen = ({ navigation }) => {
         style={styles.userNameInput}
         placeholder="Last Name"
         placeholderTextColor="grey"
-        maxLength={20}
+        maxLength={50}
         onChangeText={(val) => setLastName(val)}
       />
       <TextInput
         style={styles.userNameInput}
         placeholder="Username"
         placeholderTextColor="grey"
-        maxLength={20}
+        maxLength={25}
         onChangeText={(val) => setName(val)}
       />
       <TextInput
         style={styles.userNameInput}
         placeholder="Password"
         placeholderTextColor="grey"
-        maxLength={20}
+        maxLength={25}
         onChangeText={(val) => setPassword(val)}
       />
 
@@ -111,21 +106,21 @@ const RecruiterSignUpScreen = ({ navigation }) => {
         style={styles.userNameInput}
         placeholder="Email"
         placeholderTextColor="grey"
-        maxLength={20}
+        maxLength={50}
         onChangeText={(val) => setEmail(val)}
       />
       <TextInput
         style={styles.userNameInput}
         placeholder="Phone Number"
         placeholderTextColor="grey"
-        maxLength={20}
+        maxLength={10}
         onChangeText={(val) => setPhoneNumber(val)}
       />
       <TextInput
         style={styles.userNameInput}
         placeholder="Company"
-        maxLength={20}
-        onChangeText={(val) => setPhoneNumber(val)}
+        maxLength={50}
+        onChangeText={(val) => setCompany(val)}
       />
 
       <Button
@@ -137,7 +132,8 @@ const RecruiterSignUpScreen = ({ navigation }) => {
             userName,
             password,
             phoneNumber,
-            email
+            email,
+            company
           )
             .then(function (response) {
               if (response.status == 400) {
@@ -147,7 +143,7 @@ const RecruiterSignUpScreen = ({ navigation }) => {
                 );
               } else {
                 Alert.alert("success account was created");
-                return navigation.navigate("Profile", {
+                return navigation.navigate("RecruiterProfile", {
                   firstTime: false,
                 });
                 //Navigate to recruiter / contractor homescreen

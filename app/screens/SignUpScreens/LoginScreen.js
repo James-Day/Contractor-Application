@@ -12,17 +12,18 @@ import {
 
 var apiRequest = function (UserName, Password) {
   //change to async
+
   return fetch(
     //return the promise
-    `https://contractorwebapi20220106135413.azurewebsites.net/api/users/${UserName}/${Password}` //API not working currently.
+    `https://contractorwebapi.azurewebsites.net/api/users/${UserName}/${Password}`
   ).then(function (response) {
     return response.json(); //proccess and return this value
   });
 };
 
 const WelcomeScreen = ({ navigation }) => {
-  const [userName, setName] = useState("Shaun");
-  const [password, setPassword] = useState("Password123");
+  const [userName, setName] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <ImageBackground
       style={styles.background}
@@ -39,16 +40,16 @@ const WelcomeScreen = ({ navigation }) => {
           placeholder="Username                    "
           placeholderTextColor="white" //move some of these to the styles?
           color="white"
-          maxLength={20}
+          maxLength={25}
           onChangeText={(val) => setName(val)}
         />
         <TextInput
-          name="hey123"
+          name="password"
           style={styles.passwordInput}
           placeholder="Password                    "
           placeholderTextColor="white" //move some of these to the styles?
           color="white"
-          maxLength={20}
+          maxLength={25}
           onChangeText={(val) => setPassword(val)}
         />
       </View>
@@ -57,35 +58,42 @@ const WelcomeScreen = ({ navigation }) => {
         <Button //button can't use styles if I want to make this look nice use Pressable
           title="Login"
           onPress={() => {
-            let x = apiRequest(userName, password)
-              .then(function (response) {
-                //console.log(response);
-                console.log(typeof response);
-                if (response.status == 404) {
-                  //if not found
+            if ((userName == "") | (password == "")) {
+              Alert.alert(
+                "400 Error",
+                "Make sure you enter both a username and password"
+              );
+            } else {
+              let x = apiRequest(userName, password)
+                .then(function (response) {
+                  //console.log(response);
+                  console.log(typeof response);
+                  if (response.status == 404) {
+                    //if not found
+                    Alert.alert(
+                      "Account not found",
+                      "make sure that your username and password are correct"
+                    );
+                  } else if (response.status == 400) {
+                    Alert.alert(
+                      "400 Error",
+                      "Unknown error, make sure you enter both a username and password"
+                    );
+                  } else {
+                    //account found, send to profile screen
+                    return navigation.navigate("Profile", {
+                      response: response,
+                      firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
+                    });
+                  }
+                })
+                .catch((response) => {
                   Alert.alert(
-                    "Account not found",
-                    "make sure that your username and password are correct"
+                    "We are having networking troubles",
+                    "please try again later or try re launching your app"
                   );
-                } else if (response.status == 400) {
-                  Alert.alert(
-                    "400 Error",
-                    "Unknown error, make sure you enter both a username and password"
-                  );
-                } else {
-                  //account found, send to profile screen
-                  return navigation.navigate("Profile", {
-                    response: response,
-                    firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
-                  });
-                }
-              })
-              .catch((response) => {
-                Alert.alert(
-                  "We are having networking troubles",
-                  "please try again later or try re launching your app"
-                );
-              });
+                });
+            }
           }}
         />
         <Button
