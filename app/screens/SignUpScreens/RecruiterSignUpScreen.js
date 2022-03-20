@@ -142,11 +142,11 @@ const RecruiterSignUpScreen = ({ navigation }) => {
                   "please make sure that all required fields are filled out"
                 );
               } else {
-                Alert.alert("success account was created");
+                Alert.alert("success account was created"); //Navigate to recruiter homescreen
                 return navigation.navigate("RecruiterProfile", {
+                  response,
                   firstTime: false,
                 });
-                //Navigate to recruiter / contractor homescreen
               }
             })
             .catch((response) => {

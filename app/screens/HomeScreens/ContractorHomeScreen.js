@@ -1,18 +1,45 @@
-import { Text, View, StyleSheet, StatusBar, Platform } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  Platform,
+  Button,
+} from "react-native";
 import React, { useState } from "react";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 
 const getFonts = () =>
   Font.loadAsync({
-    //"lato-black": require("./assets/fonts/Lato-Black.tff"),
-    // "nunito-bold": require("./assets/fonts/Nunito-Bold.ttf"),
+    //"lato-black": require("C:app/screens/HomeScreens/assets/fonts/Lato-Black.ttf"), //cant figure out how to load fonts, but in the future I'd like to change this page to have softer fonts
+    // "nunito-bold": require("C:app/screens/HomeScreens/assets/fonts/Nunito-Bold.ttf"),
   });
 
 function ContractorHomeScreen({ route, navigation }) {
+  if (response == undefined) {
+    return navigation.navigate("Home", {
+      firstTime: false,
+    });
+    return (
+      <View>
+        <Text>test</Text>
+        <Button
+          title="Back"
+          onPress={() => {
+            return navigation.navigate("Home", {
+              firstTime: false,
+            });
+          }}
+        ></Button>
+      </View>
+    );
+  }
+
   const { response, firstTime } = route.params;
-  // {JSON.stringify(response)} for displaying entire response //will have to decrypt elements in response
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  console.log(JSON.stringify(response)); //keep for now for testing
+  //Should add some check to make sure response has users data.
 
   if (fontsLoaded) {
     return (
@@ -83,7 +110,7 @@ const styles = StyleSheet.create({
   linkedIn: {
     //I might want to combine linked in and email into one view so there is more room to display them
     fontSize: 15,
-    fontFamily: "lato-black",
+    fontFamily: "sans-serif",
   },
   nameBar: {
     flexDirection: "row",
@@ -95,7 +122,8 @@ const styles = StyleSheet.create({
   nameProfilePic: {
     top: 50,
     left: 20,
-    fontFamily: "nunito-bold",
+    fontFamily: "sans-serif",
+    fontWeight: "bold",
     fontSize: 24,
     color: "white",
   },
@@ -114,12 +142,13 @@ const styles = StyleSheet.create({
   },
   totalExperience: {
     fontSize: 22,
-    fontFamily: "lato-black",
+    fontFamily: "sans-serif",
   },
   userName: {
     left: "25%",
     top: "12%",
     fontSize: 20,
-    fontFamily: "lato-black",
+    fontFamily: "sans-serif",
+    fontWeight: "bold",
   },
 });

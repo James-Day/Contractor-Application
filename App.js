@@ -5,23 +5,64 @@ import WelcomeScreen from "./app/screens/SignUpScreens/LoginScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //Screens
-import ContractorHomeScreen from "./app/screens/HomeScreens/ContractorHomeScreen";
 import SignUpScreen from "./app/screens/SignUpScreens/ContractorSignUpScreen";
 import ContractorOrRecruiter from "./app/screens/SignUpScreens/ControactorOrRecruiter";
 import RecruiterSignUpScreen from "./app/screens/SignUpScreens/RecruiterSignUpScreen";
-import RecruiterHomeScreen from "./app/screens/HomeScreens/RecruiterHomeScreen";
-import ContractorCommunicationScreen from "./app/screens/CommunicationScreens/CommunicationContractorScreen";
 import RecruiterCommunicationScreen from "./app/screens/CommunicationScreens/CommunicationRecruiterScreen";
 import TextScreen from "./app/screens/CommunicationScreens/TextScreen";
 
-const Stack = createNativeStackNavigator();
+import ContractorTabs from "./app/screens/HomeScreens/ContractorTabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import RecruiterTabs from "./app/screens/HomeScreens/RecruiterTabs";
 
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+const welcomeScreenName = "Home";
+const settingsName = "settings";
+const detailsName = "details";
+
+//function App() {
+// return <MainContainer />;
+//}
+//export default App;
+/*export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName={welcomeScreenName}
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            let rn = route.name;
+            if (rn === welcomeScreenName) {
+              iconName = focused ? "home" : "home-outline";
+            } else if (rn === detailsName) {
+              iconName = focused ? "list" : "list-outline";
+            } else if (rn === settingsName) {
+              iconName = focused ? "settings" : "settings-outline";
+            }
+
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+      >
+        <Tab.Screen
+          name={welcomeScreenName}
+          component={WelcomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen name={detailsName} component={DetailsScreen} />
+        <Tab.Screen name={settingsName} component={SettingsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}*/
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
+          name={welcomeScreenName}
           component={WelcomeScreen}
           options={{ headerShown: false }}
         />
@@ -35,25 +76,16 @@ export default function App() {
           name="RecruiterSignUp"
           component={RecruiterSignUpScreen}
         />
-        <Stack.Screen name="Profile" component={ContractorHomeScreen} />
+
+        <Stack.Screen
+          name="Profile"
+          component={ContractorTabs}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="RecruiterProfile"
-          component={RecruiterHomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ContractorCommunication"
-          component={ContractorCommunicationScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="RecruiterCommunication"
-          component={RecruiterCommunicationScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TextScreen"
-          component={TextScreen}
+          component={RecruiterTabs}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

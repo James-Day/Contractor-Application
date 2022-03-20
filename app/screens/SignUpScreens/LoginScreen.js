@@ -68,7 +68,7 @@ const WelcomeScreen = ({ navigation }) => {
                 .then(function (response) {
                   //console.log(response);
                   console.log(typeof response);
-                  if (response.status == 404) {
+                  if (response == undefined || response.status == 404) {
                     //if not found
                     Alert.alert(
                       "Account not found",
@@ -81,10 +81,17 @@ const WelcomeScreen = ({ navigation }) => {
                     );
                   } else {
                     //account found, send to profile screen
-                    return navigation.navigate("Profile", {
-                      response: response,
-                      firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
-                    });
+                    if (response.isContractor == true) {
+                      return navigation.navigate("Profile", {
+                        response: response,
+                        firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
+                      });
+                    } else {
+                      return navigation.navigate("RecruiterProfile", {
+                        response: response,
+                        firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
+                      });
+                    }
                   }
                 })
                 .catch((response) => {

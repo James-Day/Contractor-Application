@@ -13,13 +13,14 @@ import AppLoading from "expo-app-loading";
 
 const getFonts = () =>
   Font.loadAsync({
+    //If I have time later I'd like to make the fonts a bit softer
     //"lato-black": require("./assets/fonts/FredokaOne-Regular.ttf"),
     // "nunito-bold": require("./assets/fonts/Nunito-Bold.ttf"),
   });
 
 function RecruiterHomeScreen({ route, navigation }) {
+  const { response, firstTime } = route.params;
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  //const { response, firstTime } = route.params;     //no response for now since api is offline
   // {JSON.stringify(response)} for displaying entire response //will have to decrypt elements in response
 
   if (fontsLoaded) {
@@ -29,7 +30,9 @@ function RecruiterHomeScreen({ route, navigation }) {
           <View style={styles.profilePic}>
             <Text style={{ color: "white" }}>profile pic</Text>
           </View>
-          <Text style={styles.userName}>Name with email below it?</Text>
+          <Text style={styles.userName}>
+            {response.firstName} {response.lastName}
+          </Text>
         </View>
         <View style={styles.experience}>
           <View style={styles.stats}>
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
   },
   linkedIn: {
     fontSize: 15,
-    fontFamily: "lato-black",
+    fontFamily: "sans-serif",
   },
   nameBar: {
     flexDirection: "row",
@@ -112,7 +115,7 @@ const styles = StyleSheet.create({
   nameProfilePic: {
     top: 50,
     left: 20,
-    fontFamily: "nunito-bold",
+    fontFamily: "sans-serif",
     fontSize: 24,
     color: "white",
   },
@@ -131,12 +134,12 @@ const styles = StyleSheet.create({
   },
   totalExperience: {
     fontSize: 22,
-    fontFamily: "lato-black",
+    fontFamily: "sans-serif",
   },
   userName: {
     left: "25%",
     top: "12%",
     fontSize: 20,
-    fontFamily: "lato-black",
+    fontFamily: "sans-serif",
   },
 });

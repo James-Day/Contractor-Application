@@ -28,8 +28,8 @@ var postAccount = function (
   userName,
   password,
   email,
-  highestEducation,
-  yearsOfExperience
+  highest_education,
+  totalExperience
 ) {
   //change to async
   let newAccount = {
@@ -38,8 +38,8 @@ var postAccount = function (
     firstName: firstName,
     lastName: lastName,
     email: email,
-    highestEducation: highestEducation,
-    yearsOfExperience: yearsOfExperience,
+    highest_education: highest_education,
+    totalExperience: totalExperience,
     isContractor: true,
   };
   for (var i = 0; i < newAccount.password.length; i++) {
@@ -54,7 +54,7 @@ var postAccount = function (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Content-Length": JSON.stringify(newAccount).length, 
+        "Content-Length": JSON.stringify(newAccount).length,
       },
       body: JSON.stringify(newAccount),
     }
@@ -212,7 +212,11 @@ const SignUpScreen = ({ navigation }) => {
                 );
               } else {
                 Alert.alert("success account was created");
-                //Navigate to recruiter / contractor homescreen
+                //Navigate to contractor homescreen
+                return navigation.navigate("Profile", {
+                  firstTime: false,
+                  response,
+                });
               }
             })
             .catch((response) => {

@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   gridView: {
-    marginTop: 10,
+    marginTop: 5,
     flex: 1,
   },
   image: {

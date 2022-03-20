@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Stylesheet,
   Button,
+  Image,
+  StatusBar,
 } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 
@@ -37,32 +39,39 @@ const ContractorCommunicationScreen = ({ navigation }) => {
   ]);
 
   return (
-    <FlatGrid
-      itemDimension={300}
-      data={items}
-      style={styles.gridView}
-      spacing={10}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          style={[styles.itemContainer, { backgroundColor: item.code }]}
-          onPress={() => {
-            return navigation.navigate("TextScreen", {
-              communicateTo: item, //send the recruiter info to the textscreen page
-            });
-          }}
-        >
-          <View style={styles.chatButton}>
-            <Text style={styles.textBox}>Example message box</Text>
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemCode}>{item.code}</Text>
+    <View
+      style={{
+        flex: 1, //move to styles
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+      }}
+    >
+      <FlatGrid
+        itemDimension={300}
+        data={items}
+        style={styles.gridView}
+        spacing={10}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={[styles.itemContainer, { backgroundColor: item.code }]}
+            onPress={() => {
+              return navigation.navigate("TextScreen", {
+                communicateTo: item, //send the recruiter info to the textscreen page
+              });
+            }}
+          >
+            <View style={styles.chatButton}>
+              <Text style={styles.textBox}>Example message box</Text>
+              <Text style={styles.itemName}>{item.name}</Text>
+              <Text style={styles.itemCode}>{item.code}</Text>
+            </View>
             <Image
               style={styles.profilePicture}
               source={require("./assets/logoPlaceHolder.png")}
             />
-          </View>
-        </TouchableOpacity>
-      )}
-    />
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 };
 
@@ -72,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   gridView: {
-    marginTop: 10,
+    marginTop: 0,
     flex: 1,
   },
   itemCode: {
@@ -81,10 +90,11 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   itemContainer: {
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     borderRadius: 5,
     padding: 10,
     height: 90,
+    flexDirection: "row",
   },
   itemName: {
     fontSize: 16,
@@ -95,6 +105,11 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     alignSelf: "center",
+  },
+  textBox: {
+    fontWeight: "600",
+    fontSize: 20,
+    color: "#fff",
   },
 });
 export default ContractorCommunicationScreen;
