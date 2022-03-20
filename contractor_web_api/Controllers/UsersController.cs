@@ -20,13 +20,7 @@ namespace contractor_web_api.Controllers
             _mapper = mapper;
         }
 
-        //Get request that responds to this uri: api/users
-        [HttpGet]
-        public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
-        {
-            var userItems = _repository.GetAllUsers();
-            return Ok(_mapper.Map<IEnumerable<UserReadDto>>(userItems));
-        }
+
         //Get request that responds to this uri: api/users/{id}
         [HttpGet("{id}", Name = "GetUserById")]
         public ActionResult<UserReadDto> GetUserById(int id) //this id comes from the uri request
@@ -38,16 +32,7 @@ namespace contractor_web_api.Controllers
             }
             return NotFound();
         }
-        [HttpGet("{Username}/{Password}")]
-        public ActionResult<UserReadDto> Login(string UserName, string Password) {
-            var userItem = _repository.Login(UserName, Password);
-            if (userItem != null)
-            {
-                return Ok(_mapper.Map<UserReadDto>(userItem));
-            }
-            return NotFound();
-        }
-        //POST request that responds to this uri: api/users
+
         [HttpPost]
         public ActionResult<UserReadDto> CreateUser(UserCreateDto createdUser)
         {
@@ -56,10 +41,20 @@ namespace contractor_web_api.Controllers
             _repository.SaveChanges();
 
             var userReadDto = _mapper.Map<UserReadDto>(userModel);
-
+           // return Ok(userReadDto);
             return CreatedAtRoute(nameof(GetUserById), new { Id = userReadDto.Id }, userReadDto);
         }
 
+        [HttpGet("{Username}/{Password}" , Name ="Login")]
+        public ActionResult<UserReadDto> Login(string UserName, string Password) {
+            var userItem = _repository.Login(UserName, Password);
+            if (userItem != null)
+            {
+                return Ok(_mapper.Map<UserReadDto>(userItem));
+            }
+            return NotFound();
+        }
+        
         //Put api/users/{id}
         [HttpPut("{id}")]
         public ActionResult UpdateUser(int id, UserUpdateDto updatedUserDto)
@@ -81,9 +76,9 @@ namespace contractor_web_api.Controllers
         //Patch api/users/{id}
         [HttpPatch("{id}")]
         public ActionResult PartialUserUpdate(int id, JsonPatchDocument<UserUpdateDto> patchDoc)
-        { // patch doc is recieved from the request
+        {  //patch doc is recieved from the request
             var userFromRepo = _repository.GetUserById(id);
-            if (userFromRepo == null)
+           if (userFromRepo == null)
             {
                 return NotFound();
             }
@@ -99,10 +94,10 @@ namespace contractor_web_api.Controllers
             return NoContent();
         }
         //Delete api/users/{id}
-        [HttpDelete("{id}")]
-        public ActionResult DeleteUser(int id)
+        [HttpDelete("delete/{Username}/{Password}")]
+        public ActionResult DeleteUser(string UserName, string password)
         {
-            var userFromRepo = _repository.GetUserById(id);
+            var userFromRepo = _repository.Login(UserName, password);
             if (userFromRepo == null)
             {
                 return NotFound();

@@ -5,9 +5,8 @@ namespace contractor_web_api.Data
     public interface IContractorRepo
     {
         bool SaveChanges();
-        IEnumerable<User> GetAllUsers();
         User GetUserById(int id);
-        User Login(string UserName, string Password);
+        User? Login(string UserName, string Password);
         void CreateNewUser(User usr);
         void AddCommunication(Communication comm);
         void UpdateUser(User usr);

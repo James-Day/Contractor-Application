@@ -30,21 +30,19 @@ namespace contractor_web_api.Data
             _context.Users.Remove(usr);
         }
 
-        public IEnumerable<User> GetAllUsers()
-        {
-            return _context.Users.ToList();
-        }
-
-        public User GetUserById(int id)
-        {
-            return _context.Users.FirstOrDefault(p => p.Id == id);
-        }
-
-        public User Login(string UserName, string Password)
+        public User? Login(string UserName, string Password)
         {
            var result =  _context.Users.FirstOrDefault(p => p.UserName == UserName);
             if (result == null) { return result; }
-            if (result.Password == Password) {
+            //Do simple decryption this is where future decryption would go.
+
+            string decryptedPassword = "";
+            for (int i = 0; i < Password.Length; i++)
+            {
+                decryptedPassword = decryptedPassword + (char)(Password[i] + 1);
+            }
+
+            if (result.Password == decryptedPassword) {
                 return result;
             }
             return null;
@@ -76,6 +74,11 @@ namespace contractor_web_api.Data
         public Communication GetCommunicationById(int id)
         {
             return _Com_context.Communications.FirstOrDefault(p => p.Id == id);
+        }
+
+        User IContractorRepo.GetUserById(int id)
+        {
+            return _context.Users.FirstOrDefault(p => p.Id == id);
         }
     }
 }
