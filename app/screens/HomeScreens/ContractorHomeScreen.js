@@ -17,28 +17,8 @@ const getFonts = () =>
   });
 
 function ContractorHomeScreen({ route, navigation }) {
-  if (response == undefined) {
-    return navigation.navigate("Home", {
-      firstTime: false,
-    });
-    return (
-      <View>
-        <Text>test</Text>
-        <Button
-          title="Back"
-          onPress={() => {
-            return navigation.navigate("Home", {
-              firstTime: false,
-            });
-          }}
-        ></Button>
-      </View>
-    );
-  }
-
   const { response, firstTime } = route.params;
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  console.log(JSON.stringify(response)); //keep for now for testing
   //Should add some check to make sure response has users data.
 
   if (fontsLoaded) {

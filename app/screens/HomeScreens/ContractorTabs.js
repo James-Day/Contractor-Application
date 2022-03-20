@@ -14,6 +14,7 @@ const settingsName = "settings";
 const Tab = createBottomTabNavigator();
 
 const ContractorTabs = ({ route, navigation }) => {
+  const currentContractor = route.params.response;
   return (
     <Tab.Navigator
       initialRouteName={contractorCommunicationName} //change to homescreen
@@ -37,11 +38,13 @@ const ContractorTabs = ({ route, navigation }) => {
         name={contractorCommunicationName}
         component={ContractorCommunicationScreen}
         options={{ headerShown: false }}
+        //initialParams={{currentCity: current_city_}}//change this to a second response that hold communication messages
       />
       <Tab.Screen
         name={profileName}
         component={ContractorHomeScreen}
         options={{ headerShown: false }}
+        initialParams={{ response: currentContractor }}
       />
       <Tab.Screen
         name={settingsName}

@@ -14,6 +14,7 @@ const settingsName = "settings";
 const Tab = createBottomTabNavigator();
 
 const RecruiterTabs = ({ route, navigation }) => {
+  const currentRecruiter = route.params.response;
   return (
     <Tab.Navigator
       initialRouteName={recruiterCommunicationName} //change to homescreen
@@ -37,11 +38,13 @@ const RecruiterTabs = ({ route, navigation }) => {
         name={recruiterCommunicationName}
         component={RecruiterCommunicationScreen}
         options={{ headerShown: false }}
+        //initialParams={{response: currentRecruiter}}//change this to a second response that hold communication messages
       />
       <Tab.Screen
         name={profileName}
         component={RecruiterHomeScreen}
         options={{ headerShown: false }}
+        initialParams={{ response: currentRecruiter }}
       />
       <Tab.Screen
         name={settingsName}

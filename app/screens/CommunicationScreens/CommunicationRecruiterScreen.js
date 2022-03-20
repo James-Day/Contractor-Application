@@ -120,6 +120,11 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 90,
     flexDirection: "row",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5,
   },
   itemName: {
     fontSize: 16,

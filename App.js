@@ -88,6 +88,12 @@ export default function App() {
           component={RecruiterTabs}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen
+          name="TextScreen"
+          component={TextScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
