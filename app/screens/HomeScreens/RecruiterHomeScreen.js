@@ -27,6 +27,8 @@ function RecruiterHomeScreen({ route, navigation }) {
     return (
       <View style={styles.background}>
         <View style={styles.nameBar}>
+          <View style={styles.wallpaper}></View>
+
           <View style={styles.profilePic}>
             <Text style={{ color: "white" }}>profile pic</Text>
           </View>
@@ -48,25 +50,6 @@ function RecruiterHomeScreen({ route, navigation }) {
             <Text style={styles.greyText}>LinkedIn</Text>
           </View>
         </View>
-        <TouchableOpacity
-          style={{
-            backgroundColor: "black",
-            height: 100,
-            width: 100,
-            top: 25,
-            alignSelf: "center",
-          }}
-          title="Temporary button to send to 'chat' screen"
-          onPress={() => {
-            return navigation.navigate("RecruiterCommunication", {
-              firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
-            });
-          }}
-        >
-          <Text style={{ color: "white" }}>
-            Place holder button for testing out communication page
-          </Text>
-        </TouchableOpacity>
       </View>
     );
   } else {
@@ -88,7 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    backgroundColor: "grey",
+    backgroundColor: "#1abc9c",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   experience: {
@@ -107,24 +90,24 @@ const styles = StyleSheet.create({
     fontFamily: "sans-serif",
   },
   nameBar: {
-    flexDirection: "row",
-    backgroundColor: "white",
+    backgroundColor: "red",
     width: "100%",
-    height: "20%",
+    height: "25%",
   },
-  nameProfilePic: {
-    top: 50,
-    left: 20,
-    fontFamily: "sans-serif",
-    fontSize: 24,
-    color: "white",
+  wallpaper: {
+    backgroundColor: "black",
+    width: "95%",
+    height: "70%",
+    borderRadius: 10,
+    margin: 10,
   },
   profilePic: {
-    top: "5%",
+    bottom: "29%",
     left: 25,
-    backgroundColor: "black",
-    width: "27%",
-    height: "75%",
+    backgroundColor: "white",
+    width: "28%",
+    height: "60%",
+    borderRadius: 90,
   },
   stats: {
     alignItems: "center",
