@@ -22,7 +22,7 @@ function setCharAt(str, index) {
   );
 }
 
-var postAccount = function (
+var postAccount = async function (
   firstName,
   lastName,
   userName,
@@ -31,7 +31,6 @@ var postAccount = function (
   highest_education,
   totalExperience
 ) {
-  //change to async
   let newAccount = {
     userName: userName,
     password: password,
@@ -44,7 +43,6 @@ var postAccount = function (
   };
   for (var i = 0; i < newAccount.password.length; i++) {
     newAccount.password = setCharAt(newAccount.password, i); //very simple encryption will need to research later
-    console.log("working");
   }
 
   return fetch(
@@ -59,7 +57,6 @@ var postAccount = function (
       body: JSON.stringify(newAccount),
     }
   ).then(function (response) {
-    console.log(`HEY123: ${JSON.stringify(newAccount)}`);
     return response.json(); //proccess and return this value
   });
 };
