@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 
-const ContractorCommunicationScreen = ({ navigation }) => {
+const ContractorCommunicationScreen = ({ route, navigation }) => {
   //find number of "right to represent" messages for this contractor
   const [items, setItems] = useState([
     { name: "TURQUOISE", code: "#1abc9c" },
@@ -35,8 +35,14 @@ const ContractorCommunicationScreen = ({ navigation }) => {
     { name: "POMEGRANATE", code: "#c0392b" },
     { name: "SILVER", code: "#bdc3c7" },
     { name: "ASBESTOS", code: "#7f8c8d" },
-    { name: "bruh", code: "#7f8c8c" },
   ]);
+
+  const messages = route.params.messages;
+
+  // console.log(messages);
+  messages.forEach((message) => {
+    console.log(message);
+  });
 
   return (
     <View
@@ -47,22 +53,24 @@ const ContractorCommunicationScreen = ({ navigation }) => {
     >
       <FlatGrid
         itemDimension={300}
-        data={items}
+        data={messages}
         style={styles.gridView}
         spacing={10}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <TouchableOpacity
-            style={[styles.itemContainer, { backgroundColor: item.code }]}
+            style={[
+              styles.itemContainer,
+              { backgroundColor: items[index % items.length].code },
+            ]}
             onPress={() => {
               return navigation.navigate("TextScreen", {
-                communicateTo: item, //send the recruiter info to the textscreen page
+                communicateTo: messages, //send the recruiter info to the textscreen page
               });
             }}
           >
             <View style={styles.chatButton}>
-              <Text style={styles.textBox}>Example message box</Text>
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemCode}>{item.code}</Text>
+              <Text style={styles.textBox}>{item.fromUserName}</Text>
+              <Text style={styles.messageTime}>{item.time}</Text>
             </View>
             <Image
               style={styles.profilePicture}
@@ -78,13 +86,13 @@ const ContractorCommunicationScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   chatButton: {
     flexDirection: "column",
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   gridView: {
     marginTop: 0,
     flex: 1,
   },
-  itemCode: {
+  messageTime: {
     fontWeight: "600",
     fontSize: 12,
     color: "#fff",
