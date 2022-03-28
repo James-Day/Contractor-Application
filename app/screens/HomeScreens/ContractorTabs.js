@@ -1,3 +1,7 @@
+/*
+The purpose of this screen is to act as the tabs at the bottom of the screen 
+for navigating between the contractors different screens.
+*/
 import { React } from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -15,9 +19,11 @@ const Tab = createBottomTabNavigator();
 
 const ContractorTabs = ({ route, navigation }) => {
   const currentContractor = route.params.response;
+  const ContractorsRequests = route.params.messages;
+
   return (
     <Tab.Navigator
-      initialRouteName={contractorCommunicationName} //change to homescreen
+      initialRouteName={profileName}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -38,7 +44,8 @@ const ContractorTabs = ({ route, navigation }) => {
         name={contractorCommunicationName}
         component={ContractorCommunicationScreen}
         options={{ headerShown: false }}
-        //initialParams={{currentCity: current_city_}}//change this to a second response that hold communication messages
+        initialParams={{ messages: ContractorsRequests }}
+        //initialParams={{response: currentContractor}}//change this to a second response that hold communication messages
       />
       <Tab.Screen
         name={profileName}

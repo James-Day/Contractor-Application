@@ -1,3 +1,8 @@
+/*
+The purpose of this screen is to act as the tabs at the bottom of the screen 
+for navigating between the contractors different screens.
+*/
+
 import { React } from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -15,9 +20,11 @@ const Tab = createBottomTabNavigator();
 
 const RecruiterTabs = ({ route, navigation }) => {
   const currentRecruiter = route.params.response;
+  const RecruiterRequests = route.params.messages;
+
   return (
     <Tab.Navigator
-      initialRouteName={recruiterCommunicationName} //change to homescreen
+      initialRouteName={profileName} //change to homescreen
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -38,6 +45,8 @@ const RecruiterTabs = ({ route, navigation }) => {
         name={recruiterCommunicationName}
         component={RecruiterCommunicationScreen}
         options={{ headerShown: false }}
+        initialParams={{ user: currentRecruiter }}
+
         //initialParams={{response: currentRecruiter}}//change this to a second response that hold communication messages
       />
       <Tab.Screen
