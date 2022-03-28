@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    backgroundColor: "grey",
+    backgroundColor: "#1abc9c",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   experience: {

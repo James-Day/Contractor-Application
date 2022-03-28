@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 
-const RecruiterCommunicationScreen = ({ navigation }) => {
+const RecruiterCommunicationScreen = ({ route, navigation }) => {
   //find number of "right to represent" messages for this recruiter
   let numMessages = 8;
   const [userName, setName] = useState("Shaun");
@@ -79,10 +79,9 @@ const RecruiterCommunicationScreen = ({ navigation }) => {
       <TouchableOpacity
         title="Hello"
         onPress={() => {
-          Alert.alert(
-            "Alert",
-            'There would be a textbox here for the reruiter to ask the contractor for certain things, this is in development and can be found in the "designRepresentRequestScreen" file'
-          );
+          return navigation.navigate("DesignRequest", {
+            user: route.params.user,
+          });
         }}
         style={styles.rightToRepresentButton}
       >

@@ -14,6 +14,7 @@ import TextScreen from "./app/screens/CommunicationScreens/TextScreen";
 import ContractorTabs from "./app/screens/HomeScreens/ContractorTabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import RecruiterTabs from "./app/screens/HomeScreens/RecruiterTabs";
+import DesignRepresentRequest from "./app/screens/CommunicationScreens/DesignRepresentRequestScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -69,7 +70,6 @@ export default function App() {
         <Stack.Screen
           name="ContractorOrRecruiter"
           component={ContractorOrRecruiter}
-          options={{ headerShown: false }}
         />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen
@@ -94,6 +94,8 @@ export default function App() {
           component={TextScreen}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen name="DesignRequest" component={DesignRepresentRequest} />
       </Stack.Navigator>
     </NavigationContainer>
   );
