@@ -10,14 +10,24 @@ import {
   Alert,
 } from "react-native";
 
-var apiRequest = function (UserName, Password) {
-  //change to async
-
+var apiRequest = async function (UserName, Password) {
   return fetch(
     //return the promise
     `https://contractorwebapi.azurewebsites.net/api/users/${UserName}/${Password}`
   ).then(function (response) {
     return response.json(); //proccess and return this value
+  });
+};
+
+//this function retrieves all messages between contractors and recruiters.
+//this API endpoint should only be used if the user is already logged in,
+//again I will need to add authentification to this.
+var fetchRepresentRequests = function (UserName) {
+  return fetch(
+    //return the promise
+    `https://contractorwebapi.azurewebsites.net/api/users/userComms/${UserName}`
+  ).then(function (messages) {
+    return messages.json();
   });
 };
 
@@ -64,7 +74,7 @@ const WelcomeScreen = ({ navigation }) => {
                 "Make sure you enter both a username and password"
               );
             } else {
-              let x = apiRequest(userName, password)
+              apiRequest(userName, password)
                 .then(function (response) {
                   //console.log(response);
                   console.log(typeof response);
@@ -80,18 +90,21 @@ const WelcomeScreen = ({ navigation }) => {
                       "Unknown error, make sure you enter both a username and password"
                     );
                   } else {
-                    //account found, send to profile screen
-                    if (response.isContractor == true) {
-                      return navigation.navigate("Profile", {
-                        response: response,
-                        firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
-                      });
-                    } else {
-                      return navigation.navigate("RecruiterProfile", {
-                        response: response,
-                        firstTime: false, //when navigating to the profile screen from the sign up screen, well give a tutorial
-                      });
-                    }
+                    //account found, send to profile screen and start fetching their messages
+                    fetchRepresentRequests(userName).then(function (messages) {
+                      //console.log(messages);
+                      if (response.isContractor == true) {
+                        return navigation.navigate("Profile", {
+                          response: response,
+                          messages: messages,
+                        });
+                      } else {
+                        return navigation.navigate("RecruiterProfile", {
+                          response: response,
+                          messages: messages,
+                        });
+                      }
+                    });
                   }
                 })
                 .catch((response) => {
@@ -157,6 +170,7 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    color: "white",
     borderColor: "white",
   },
 });
