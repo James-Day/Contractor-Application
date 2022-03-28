@@ -138,5 +138,18 @@ namespace contractor_web_api.Controllers
             }
             return NotFound();
         }
+
+        //Get request that responds to this uri: api/users/userComms/{UserName}
+        //This request will retrieve all communications for a given user.
+        [HttpGet("userComms/{UserName}", Name = "GetCommunicationsByUserName")]
+        public ActionResult<UserReadDto> GetCommunicationsByUserName(string UserName) //this id comes from the uri request
+        {
+            var Communications = _repository.RetrieveUsersCommunications(UserName);
+            if (Communications != null)
+            {
+                return Ok(_mapper.Map < IEnumerable<CommunicationReadDto>>(Communications));
+            }
+            return NotFound();
+        }
     }
 }

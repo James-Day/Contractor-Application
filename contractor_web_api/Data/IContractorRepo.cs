@@ -11,7 +11,8 @@ namespace contractor_web_api.Data
         void AddCommunication(Communication comm);
         void UpdateUser(User usr);
         void DeleteUser(User usr);
-        public IEnumerable<Communication> RetrieveCommunications(); //will change parameters to a name
+        IEnumerable<Communication> RetrieveCommunications(); //will change parameters to a name
+        Communication[] RetrieveUsersCommunications(string UserName);
         Communication GetCommunicationById(int id);
     }
 }

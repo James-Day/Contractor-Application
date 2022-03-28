@@ -49,5 +49,10 @@ namespace contractor_web_api.Data
         {
             throw new NotImplementedException();
         }
+
+        public Communication[] RetrieveUsersCommunications(string UserName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace contractor_web_api.Data
 
         }
         public DbSet<Communication> Communications { get; set; }
+        
     }
 }
 
