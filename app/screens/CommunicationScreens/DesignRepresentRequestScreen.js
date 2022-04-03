@@ -14,6 +14,7 @@ var postAccount = async function (from, to, message) {
     fromUserName: from,
     toUserName: to,
     message: message,
+    CommunicationStatus: "Pending",
   };
   return fetch(
     //return the promise
@@ -70,8 +71,7 @@ const DesignRepresentRequest = ({ route, navigation }) => {
       <TouchableOpacity
         style={styles.templateButtons}
         onPress={() => {
-          let representTemplate = ` Template 1: I "first name" "last name" give you ${communicateFrom} permission
-          to represent me at ${companyRequest} for the position of ${jobTitle}`;
+          let representTemplate = ` Template 1: I "first name" "last name" give you ${communicateFrom} permission to represent me at ${companyRequest} for the position of ${jobTitle}`;
           postAccount(communicateFrom, communicateToUser, representTemplate);
           Alert.alert(
             //before sending will have to do some verification to make sure send to is a valid account.
@@ -89,10 +89,7 @@ const DesignRepresentRequest = ({ route, navigation }) => {
       <TouchableOpacity
         style={styles.templateButtons}
         onPress={() => {
-          let representTemplate = ` Template 2: I "first name" " last name", give ${communicateFrom} from
-          ${communicateFromCompany} my permission to present my resume and
-          credentials to ${companyRequest} for the ${jobTitle} something about  
-          location and pay..`; //change this to take proper params
+          let representTemplate = ` Template 2: I "first name" " last name", give ${communicateFrom} from ${communicateFromCompany} my permission to present my resume and credentials to ${companyRequest} for the ${jobTitle} something about location and pay..`; //change this to take proper params
           postAccount(communicateFrom, communicateToUser, representTemplate);
           Alert.alert(
             //before sending will have to do some verification to make sure send to is a valid account.
@@ -112,10 +109,7 @@ const DesignRepresentRequest = ({ route, navigation }) => {
       <TouchableOpacity
         style={styles.templateButtons}
         onPress={() => {
-          let representTemplate = ` Template 3 I, (first name), do hereby give exclusive authorization to
-          ${communicateFromCompany} to submit and represent me at for the position of
-          ${jobTitle} at ${companyRequest}. I have not and will not give any entity, firm and/or
-          agency the right to submit my qualifications or represent me in any way for this specific position.`;
+          let representTemplate = ` Template 3 I, (first name), do hereby give exclusive authorization to ${communicateFromCompany} to submit and represent me at for the position of ${jobTitle} at ${companyRequest}. I have not and will not give any entity, firm and/or agency the right to submit my qualifications or represent me in any way for this specific position.`;
           postAccount(communicateFrom, communicateToUser, representTemplate);
           Alert.alert(
             //before sending will have to do some verification to make sure send to is a valid account.
@@ -127,7 +121,7 @@ const DesignRepresentRequest = ({ route, navigation }) => {
         <Text style={{}}>
           Template 3 I, (first name), do hereby give exclusive authorization to
           {communicateFromCompany} to submit and represent me at for the
-          position of {jobTitle} at ${companyRequest}. I have not and will not
+          position of {jobTitle} at {companyRequest}. I have not and will not
           give any entity, firm and/or agency the right to submit my
           qualifications or represent me in any way for this specific position.
         </Text>
