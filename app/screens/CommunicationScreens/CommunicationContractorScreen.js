@@ -9,8 +9,18 @@ import {
   Button,
   Image,
   StatusBar,
+  Alert,
 } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
+
+var getRecruiterInfo = async function (UserName) {
+  return fetch(
+    //return the promise
+    `https://contractorwebapi.azurewebsites.net/api/users/profilePage/${UserName}`
+  ).then(function (RecruiterInfo) {
+    return RecruiterInfo.json(); //proccess and return this value
+  });
+};
 
 const ContractorCommunicationScreen = ({ route, navigation }) => {
   //find number of "right to represent" messages for this contractor
@@ -38,11 +48,10 @@ const ContractorCommunicationScreen = ({ route, navigation }) => {
   ]);
 
   const messages = route.params.messages;
-
   // console.log(messages);
-  messages.forEach((message) => {
-    console.log(message);
-  });
+  //messages.forEach((message) => {
+  //  console.log(message);
+  //});
 
   return (
     <View
@@ -63,8 +72,22 @@ const ContractorCommunicationScreen = ({ route, navigation }) => {
               { backgroundColor: items[index % items.length].code },
             ]}
             onPress={() => {
-              return navigation.navigate("TextScreen", {
-                communicateTo: messages, //send the recruiter info to the textscreen page
+              //not sure if it'd be better to do a API call or if it'd be better just store the recruiters info in the request
+              getRecruiterInfo(item.fromUserName).then(function (
+                RecruiterInfo
+              ) {
+                if (RecruiterInfo.status == "404") {
+                  Alert.alert(
+                    "oops",
+                    "it looks like this recruiter has deleted their account, please restart your app"
+                  );
+                } else {
+                  console.log(RecruiterInfo);
+                  return navigation.navigate("AnswerRequest", {
+                    message: messages[index], //send the recruiter info to the textscreen page
+                    Recruiter: RecruiterInfo,
+                  });
+                }
               });
             }}
           >
