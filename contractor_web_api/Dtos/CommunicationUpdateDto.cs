@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace contractor_web_api.Models
+
+namespace contractor_web_api.Dtos
 {
-    public class Communication
+    public class CommunicationUpdateDto
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         [MaxLength(25)]
         public string toUserName { get; set; }

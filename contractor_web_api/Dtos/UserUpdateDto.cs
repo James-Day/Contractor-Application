@@ -4,8 +4,6 @@ namespace contractor_web_api.Dtos
 {
     public class UserUpdateDto
     {
-  
-
         [Required]
         [MaxLength(25)]
         public string UserName { get; set; }
@@ -28,7 +26,6 @@ namespace contractor_web_api.Dtos
         public string Email { get; set; }
         [MaxLength(50)]
         public string? Linkedin { get; set; }
-        [MaxLength(4)]
         public int? SSNLastFour { get; set; }
         [MaxLength(25)]
         public string? highest_education { get; set; }

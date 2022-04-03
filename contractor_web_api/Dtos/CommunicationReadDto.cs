@@ -7,5 +7,6 @@
         public string fromUserName { get; set; }
         public string message { get; set; }
         public DateTime time { get; set; }
+        public string CommunicationStatus { get; set; }
     }
 }

@@ -15,5 +15,8 @@ namespace contractor_web_api.Dtos
         public string message { get; set; }
         [Required]
         public DateTime time { get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string CommunicationStatus { get; set; }
     }
 }
