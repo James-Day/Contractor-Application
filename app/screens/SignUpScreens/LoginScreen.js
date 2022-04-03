@@ -92,7 +92,6 @@ const WelcomeScreen = ({ navigation }) => {
                   } else {
                     //account found, send to profile screen and start fetching their messages
                     fetchRepresentRequests(userName).then(function (messages) {
-                      //console.log(messages);
                       if (response.isContractor == true) {
                         return navigation.navigate("Profile", {
                           response: response,

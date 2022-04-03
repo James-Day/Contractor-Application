@@ -6,6 +6,7 @@ import {
   Platform,
   StatusBar,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import * as Font from "expo-font";
@@ -27,27 +28,37 @@ function RecruiterHomeScreen({ route, navigation }) {
     return (
       <View style={styles.background}>
         <View style={styles.nameBar}>
-          <View style={styles.wallpaper}></View>
+          <View style={styles.wallpaper}>
+            <Image
+              style={styles.profileBanner}
+              source={require("./assets/banner_holder.png")}
+            ></Image>
+          </View>
 
-          <View style={styles.profilePic}>
-            <Text style={{ color: "white" }}>profile pic</Text>
+          <View style={styles.profilePicView}>
+            <Image
+              style={styles.profilePic}
+              source={require("./assets/profPic2.jpg")}
+            ></Image>
           </View>
           <Text style={styles.userName}>
             {response.firstName} {response.lastName}
           </Text>
         </View>
-        <View style={styles.experience}>
-          <View style={styles.stats}>
-            <Text style={styles.greyText}>Current Posts</Text>
-            <Text style={styles.totalExperience}></Text>
-          </View>
-          <Text>|</Text>
-          <View style={styles.stats}>
-            <Text style={styles.greyText}>Email</Text>
-          </View>
-          <Text>|</Text>
-          <View style={styles.stats}>
-            <Text style={styles.greyText}>LinkedIn</Text>
+        <View style={styles.inner}>
+          <View style={styles.experience}>
+            <View style={styles.stats}>
+              <Text style={styles.greyText}>Current Posts</Text>
+              <Text style={styles.totalExperience}></Text>
+            </View>
+            <Text>|</Text>
+            <View style={styles.stats}>
+              <Text style={styles.greyText}>Email</Text>
+            </View>
+            <Text>|</Text>
+            <View style={styles.stats}>
+              <Text style={styles.greyText}>LinkedIn</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -102,11 +113,25 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   profilePic: {
-    bottom: "29%",
+    flex: 1,
+    width: undefined,
+    height: undefined,
+    borderRadius: 90,
+  },
+  profileBanner: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  profilePicView: {
+    padding: 2,
     left: 25,
-    backgroundColor: "white",
+    bottom: "49%",
     width: "28%",
     height: "60%",
+    backgroundColor: "white",
     borderRadius: 90,
   },
   stats: {
@@ -120,9 +145,12 @@ const styles = StyleSheet.create({
     fontFamily: "sans-serif",
   },
   userName: {
-    left: "25%",
-    top: "12%",
-    fontSize: 20,
+    position: "absolute",
+    left: "40%",
+    top: "75%",
+    fontSize: 30,
     fontFamily: "sans-serif",
+    color: "white",
   },
+  inner: { margin: 10, height: "70%", backgroundColor: "white" },
 });
