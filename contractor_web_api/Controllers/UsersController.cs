@@ -49,7 +49,9 @@ namespace contractor_web_api.Controllers
         public ActionResult<UserReadDto> Login(string UserName, string Password) {
             var userItem = _repository.Login(UserName, Password);
             if (userItem != null)
-            {
+            {//might change this to return a User instead, and the "get user's
+             //profile page" would return a readDto so I could specify what info
+             //to return based on the scenario
                 return Ok(_mapper.Map<UserReadDto>(userItem));
             }
             return NotFound();
@@ -121,7 +123,7 @@ namespace contractor_web_api.Controllers
 
             return CreatedAtRoute(nameof(GetCommunicationById), new { Id = CommunicationReadDto.Id }, CommunicationReadDto);
         }
-        //Get request that responds to this uri: api/users/comm
+        //Get request that responds to this uri: api/users/comm //gets all comms, remove this, just for testing
         [HttpGet("comm")]
         public ActionResult<IEnumerable<Communication>> GetAllCommunications()
         {
@@ -151,5 +153,36 @@ namespace contractor_web_api.Controllers
             }
             return NotFound();
         }
+        [HttpGet("profilePage/{username}", Name = "GetUsersProfilePage")]
+        public ActionResult<UserReadDto> GetUsersProfilePage(string UserName) //this id comes from the uri request
+        {
+            var userItem = _repository.GetUsersProfilePage(UserName);
+            if (userItem != null)
+            {
+                return Ok(_mapper.Map<RecruiterReadDto>(userItem));
+            }
+            return NotFound();
+        }
+        //Patch api/users/comms/{id}
+        [HttpPatch("comm/{id}")]
+        public ActionResult PartialCommunicationUpdate(int id, JsonPatchDocument<CommunicationUpdateDto> patchDoc)
+        {  //patch doc is recieved from the request
+            var commFromRepo = _repository.GetCommunicationById(id);
+            if (commFromRepo == null)
+            {
+                return NotFound();
+            }
+            var commToPatch = _mapper.Map<CommunicationUpdateDto>(commFromRepo);
+            patchDoc.ApplyTo(commToPatch, ModelState);
+            if (!TryValidateModel(commToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+            _mapper.Map(commToPatch, commFromRepo);
+            _repository.UpdateComm(commFromRepo); // doesn't do anything curently, but is good practice to call this anyway
+            _repository.SaveChanges();
+            return NoContent();
+        }
+
     }
 }

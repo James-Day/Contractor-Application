@@ -41,7 +41,7 @@ namespace contractor_web_api.Data
 
             //Do simple decryption this is where future decryption would go.
             //might change this to encrypt the passed in password and check for
-            //equivellency instead of decrypting ing.
+            //equivellency instead of decrypting.
             string decryptedPassword = "";
             for (int i = 0; i < Password.Length; i++)
             {
@@ -96,6 +96,24 @@ namespace contractor_web_api.Data
            
              return _com_context.Communications.Where(c => c.toUserName == UserName || c.fromUserName == UserName).AsEnumerable().Where(c => c.toUserName == UserName || c.fromUserName == UserName).ToArray();
             
+        }
+
+        public User? GetUsersProfilePage(string UserName)
+        {
+            //converts to SQL statement which is case insensitive,
+            //once the case insensative maches are returned, communications are
+            //checked for case sensativity. This is probablly not the best way,
+            //but I can't find a better way without editing the database.
+            var result = _user_context.Users.Where(p => p.UserName == UserName).AsEnumerable().FirstOrDefault(p => p.UserName == UserName);
+            if (result == null) { return result; }
+           
+                //I could add something here to check if their account is private or not.
+                return result;
+        }
+
+        public void UpdateComm(Communication comm)
+        {
+            //nothing 
         }
     }
 }

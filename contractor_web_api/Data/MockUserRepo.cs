@@ -54,5 +54,15 @@ namespace contractor_web_api.Data
         {
             throw new NotImplementedException();
         }
+
+        public User? GetUsersProfilePage(string UserName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateComm(Communication comm)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
